@@ -1,4 +1,3 @@
-/* Variables de couleurs */
 :root {
     --background-color: #ffffff;
     --card-bg: rgba(64, 224, 208, 0.2);
@@ -11,7 +10,6 @@
     --animation-duration: 0.6s;
 }
 
-/* Style général */
 html {
     scroll-behavior: smooth;
 }
@@ -116,11 +114,12 @@ body {
 .navbar a:hover::after {
     width: 100%;
 }
+
+/* Conteneurs d’images */
 .image-container {
     display: flex;
     justify-content: center;
-    margin-bottom: 5px;
-    margin-top: 5px;
+    margin: 5px 0;
 }
 
 .section-image {
@@ -138,6 +137,13 @@ body {
 .section-image:hover {
     transform: scale(1.03);
     box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
+}
+
+.project-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 15px;
 }
 
 /* Sections */
@@ -165,7 +171,6 @@ body {
     border-radius: 15px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
     border: 1px solid var(--card-border);
     padding: 30px;
     max-width: 800px;
@@ -196,7 +201,7 @@ body {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
-/* Accueil spécifique */
+/* Accueil */
 .accueil-card h1 {
     font-size: 2.5em;
     margin-bottom: 20px;
@@ -232,43 +237,15 @@ body {
     object-fit: cover;
 }
 
-/* Table Expériences Professionnelles */
-.experience-table {
+/* Tables */
+.experience-table, .realisations-table, .loisirs-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
     animation: fadeIn var(--animation-duration) forwards;
 }
 
-.experience-table th, .experience-table td {
-    border: 1px solid var(--card-border);
-    padding: 15px;
-    text-align: left;
-    vertical-align: top;
-    transition: background-color 0.3s;
-}
-
-.experience-table th {
-    background-color: rgba(64, 224, 208, 0.4);
-    color: var(--text-color);
-}
-
-.experience-table tr:nth-child(even) {
-    background-color: rgba(64, 224, 208, 0.1);
-}
-
-.experience-table tr:hover {
-    background-color: rgba(64, 224, 208, 0.2);
-}
-
-/* Styles pour les tableaux Réalisations et Loisirs */
-.realisations-table, .loisirs-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    animation: fadeIn var(--animation-duration) forwards;
-}
-
+.experience-table th, .experience-table td,
 .realisations-table th, .realisations-table td,
 .loisirs-table th, .loisirs-table td {
     border: 1px solid var(--card-border);
@@ -278,20 +255,20 @@ body {
     transition: background-color 0.3s;
 }
 
-.realisations-table th, .loisirs-table th {
+.experience-table th, .realisations-table th, .loisirs-table th {
     background-color: rgba(64, 224, 208, 0.4);
     color: var(--text-color);
 }
 
-.realisations-table tr:nth-child(even), .loisirs-table tr:nth-child(even) {
+.experience-table tr:nth-child(even), .realisations-table tr:nth-child(even), .loisirs-table tr:nth-child(even) {
     background-color: rgba(64, 224, 208, 0.1);
 }
 
-.realisations-table tr:hover, .loisirs-table tr:hover {
+.experience-table tr:hover, .realisations-table tr:hover, .loisirs-table tr:hover {
     background-color: rgba(64, 224, 208, 0.2);
 }
 
-/* Styles pour les lignes de sous-section */
+/* Sous-sections */
 .sub-section-row {
     display: none;
 }
@@ -311,19 +288,11 @@ body {
     margin-left: 20px;
 }
 
-/* Animation pour les sous-sections */
-@keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.sub-section-row.show {
+    display: table-row;
 }
 
-/* Styles pour les boutons de bascule */
+/* Boutons */
 .toggle-btn {
     background-color: var(--link-color);
     color: #ffffff;
@@ -331,7 +300,6 @@ body {
     padding: 10px 15px;
     border-radius: 5px;
     cursor: pointer;
-    margin-top: 10px;
     transition: background-color 0.3s;
 }
 
@@ -339,12 +307,7 @@ body {
     background-color: #0056b3;
 }
 
-/* Sous-sections visibles */
-.sub-section-row.show {
-    display: table-row;
-}
-
-/* Compétences et Loisirs */
+/* Compétences */
 .competences-list h3 {
     margin-top: 10px;
 }
@@ -372,55 +335,83 @@ body {
     backdrop-filter: blur(10px);
     border-top: 1px solid var(--card-border);
     position: relative;
-    bottom: 0;
     width: 100%;
     animation: slideUp var(--animation-duration) forwards;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.download-btn {
+    display: inline-block;
+    background-color: var(--link-color);
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.download-btn:hover {
+    background-color: #0056b3;
+}
+
+.lang-switcher {
+    display: flex;
+    gap: 5px;
+}
+
+.lang-btn {
+    background-color: #ccc;
+    color: #000;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.lang-btn.active {
+    background-color: var(--link-color);
+    color: #ffffff;
+}
+
+.lang-btn:hover {
+    background-color: #0056b3;
+    color: #ffffff;
 }
 
 /* Animations */
 @keyframes fadeInUp {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes fadeInLeft {
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+    to { opacity: 1; transform: translateX(0); }
 }
 
 @keyframes fadeInRight {
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
+    to { opacity: 1; transform: translateX(0); }
 }
 
 @keyframes fadeIn {
-    to {
-        opacity: 1;
-    }
+    to { opacity: 1; }
+}
+
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes slideDown {
-    from {
-        transform: translateY(-100%);
-    }
-    to {
-        transform: translateY(0);
-    }
+    from { transform: translateY(-100%); }
+    to { transform: translateY(0); }
 }
 
 @keyframes slideUp {
-    from {
-        transform: translateY(100%);
-    }
-    to {
-        transform: translateY(0);
-    }
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
 }
 
 /* Responsivité */
@@ -453,16 +444,15 @@ body {
         padding: 10px;
     }
 
-    .sub-section-row {
-        display: none;
+    .footer {
+        padding: 15px;
     }
 
-    .sub-section-row.show {
-        display: table-row;
+    .download-btn {
+        padding: 8px 15px;
     }
 
-
-
-
-
+    .lang-btn {
+        padding: 4px 8px;
+    }
 }
