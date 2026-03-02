@@ -3,595 +3,1150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>CV de Nils Vanderschooten-Akinmoladun</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <title>CV de Nils Vanderschooten-Akinmoladun - IntelliCV</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* ===== VARIABLES & RESET ===== */
+        :root {
+            --bg-primary: #050505;
+            --bg-secondary: #0a0a0f;
+            --bg-card: #121215;
+            --accent: #00e676;
+            --accent-dim: rgba(0, 230, 118, 0.1);
+            --accent-border: rgba(0, 230, 118, 0.3);
+            --text-primary: #e0e0e0;
+            --text-secondary: #888899;
+            --font-main: 'Roboto', sans-serif;
+            --font-mono: 'Fira Code', monospace;
+            --transition: 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-main); background: var(--bg-primary); color: var(--text-primary); line-height: 1.6; overflow-x: hidden; }
+
+        /* ===== ANIMATED WAVE BACKGROUND ===== */
+        .wave-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; background: #1a1a1f; }
+        .wave-bg svg { position: absolute; bottom: 0; left: 0; width: 200%; height: 100%; }
+        .wave-bg .wave1 { animation: waveMove1 12s ease-in-out infinite; }
+        .wave-bg .wave2 { animation: waveMove2 15s ease-in-out infinite; }
+        .wave-bg .wave3 { animation: waveMove3 18s ease-in-out infinite; }
+        @keyframes waveMove1 { 0%, 100% { transform: translateX(0) translateY(0); } 50% { transform: translateX(-25%) translateY(-15px); } }
+        @keyframes waveMove2 { 0%, 100% { transform: translateX(0) translateY(0); } 50% { transform: translateX(-20%) translateY(10px); } }
+        @keyframes waveMove3 { 0%, 100% { transform: translateX(0) translateY(0); } 50% { transform: translateX(-15%) translateY(-8px); } }
+
+        /* ===== GLASSMORPHISM CARDS ===== */
+        .glass { background: rgba(18, 18, 21, 0.65); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(0, 230, 118, 0.12); }
+
+        /* ===== ABOUT INTRO PANEL ===== */
+        .about-intro { max-width: 750px; margin: 0 auto 10px; padding: 30px 35px; border-radius: 12px; background: rgba(18, 18, 21, 0.6); backdrop-filter: blur(10px); border: 1px solid var(--accent-border); text-align: center; }
+        .about-intro p { color: var(--text-secondary); font-size: 1.05rem; line-height: 1.8; margin-bottom: 18px; }
+        .about-intro p:last-child { margin-bottom: 0; }
+
+        /* ===== NAVBAR ===== */
+        .navbar { position: fixed; top: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 15px 40px; background: rgba(26, 26, 31, 0.75); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); z-index: 1000; border-bottom: 1px solid var(--accent-border); }
+        .nav-logo { display: flex; align-items: center; gap: 10px; }
+        .nav-logo img { width: 40px; height: 40px; }
+        .nav-logo span { font-weight: bold; color: var(--accent); letter-spacing: 1px; }
+        .nav-links { list-style: none; display: flex; gap: 20px; }
+        .nav-links a { color: var(--text-primary); text-decoration: none; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: var(--transition); }
+        .nav-links a:hover { color: var(--accent); }
+
+        /* ===== LANG SWITCHER ===== */
+        .lang-switcher { display: flex; gap: 8px; margin-left: 20px; align-items: center; }
+        .lang-btn { background: transparent; border: 2px solid transparent; padding: 3px; cursor: pointer; border-radius: 4px; transition: var(--transition); display: flex; align-items: center; justify-content: center; }
+        .lang-btn.active, .lang-btn:hover { border-color: var(--accent); box-shadow: 0 0 8px rgba(0, 230, 118, 0.3); }
+        .flag-icon { width: 24px; height: 16px; object-fit: cover; border-radius: 2px; display: block; }
+
+        /* ===== SECTION GLOBALS ===== */
+        .section { padding: 100px 10% 60px; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; }
+        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 50px; text-transform: uppercase; letter-spacing: 3px; color: #fff; position: relative; }
+        .section-title::after { content: ''; display: block; width: 60px; height: 3px; background: var(--accent); margin: 15px auto 0; }
+        .reveal { opacity: 0; transform: translateY(40px); transition: var(--transition); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* ===== HERO SECTION (Template Style) ===== */
+        #accueil { display: flex; flex-direction: row; align-items: center; justify-content: space-between; padding: 0; position: relative; overflow: hidden; }
+        .hero-content { width: 50%; padding: 0 10%; z-index: 2; }
+        .hero-image-container { width: 50%; height: 100vh; position: relative; background: var(--bg-secondary); clip-path: polygon(15% 0, 100% 0, 100% 100%, 0 100%); display: flex; align-items: center; justify-content: center; }
+        .hero-image-container::before { content: 'IT'; position: absolute; font-size: 30vw; font-weight: bold; color: rgba(255,255,255,0.02); line-height: 1; bottom: -5%; right: -5%; z-index: 1; }
+        .hero-image { width: 350px; height: 350px; border-radius: 50%; object-fit: cover; z-index: 2; border: 4px solid var(--accent); box-shadow: 0 0 50px rgba(0, 230, 118, 0.2); }
+
+        /* Typing Effect */
+        .typing-container { font-family: var(--font-mono); font-size: 2.5rem; color: #fff; margin-bottom: 20px; height: 100px; display: flex; align-items: center; }
+        .cursor { display: inline-block; width: 12px; height: 2.5rem; background-color: var(--accent); margin-left: 5px; animation: blink 1s step-end infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        .hero-role { font-size: 1.2rem; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 30px; }
+        .hero-desc { color: var(--text-secondary); max-width: 500px; text-align: justify; margin-bottom: 30px; }
+
+        /* ===== ABOUT / FORMATIONS / EXPERIENCES ===== */
+        .timeline { display: flex; flex-direction: column; gap: 20px; max-width: 800px; margin: 0 auto; }
+        .timeline-item { background: rgba(18, 18, 21, 0.6); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding: 25px; border-left: 4px solid var(--accent); border-radius: 0 8px 8px 0; transition: var(--transition); display: flex; align-items: center; gap: 20px; border-top: 1px solid rgba(0, 230, 118, 0.08); }
+        .timeline-item:hover { transform: translateX(10px); box-shadow: 0 5px 20px rgba(0, 230, 118, 0.1); }
+        .timeline-logo { width: 60px; height: 60px; min-width: 60px; object-fit: contain; border-radius: 8px; background: rgba(255,255,255,0.05); padding: 5px; }
+        .timeline-date { color: var(--accent); font-family: var(--font-mono); font-size: 0.9rem; margin-bottom: 10px; display: block; }
+        .timeline-title { font-size: 1.3rem; color: #fff; margin-bottom: 5px; }
+
+        /* ===== ABOUT SECTION ===== */
+        #about { padding: 100px 8% 60px; }
+        .about-tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 40px; flex-wrap: wrap; }
+        .about-tab { background: rgba(18, 18, 21, 0.6); backdrop-filter: blur(8px); border: 1px solid var(--accent-border); color: var(--text-secondary); padding: 10px 25px; border-radius: 30px; cursor: pointer; font-size: 0.95rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transition: var(--transition); }
+        .about-tab:hover { border-color: var(--accent); color: var(--accent); }
+        .about-tab.active { background: var(--accent); color: var(--bg-primary); border-color: var(--accent); }
+        .about-panel { display: none; animation: fadeIn 0.4s ease; }
+        .about-panel.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        .subsection-title { font-size: 1.6rem; color: #fff; margin-bottom: 25px; text-align: center; letter-spacing: 2px; text-transform: uppercase; }
+        .subsection-title::after { content: ''; display: block; width: 40px; height: 2px; background: var(--accent); margin: 10px auto 0; }
+
+        /* ===== SKILLS ===== */
+        .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 18px; text-align: center; }
+        .skill-card { background: rgba(18, 18, 21, 0.55); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding: 22px 15px 18px; border-radius: 8px; border: 1px solid var(--accent-border); transition: var(--transition); display: flex; flex-direction: column; align-items: center; }
+        .skill-card:hover { border-color: var(--accent); transform: translateY(-10px); background: var(--accent-dim); }
+        .skill-card i { font-size: 3rem; color: var(--accent); margin-bottom: 12px; font-style: normal; }
+        .skill-card h4 { font-size: 1rem; color: #fff; }
+        .skill-icon { width: 48px; height: 48px; object-fit: contain; margin-bottom: 12px; filter: grayscale(30%); transition: var(--transition); }
+        .skill-card:hover .skill-icon { filter: grayscale(0%) drop-shadow(0 0 6px rgba(0, 230, 118, 0.4)); }
+
+        /* ===== PORTFOLIO (MOSAÏQUE) ===== */
+        .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
+        .portfolio-item { position: relative; height: 250px; border-radius: 8px; overflow: hidden; cursor: pointer; border: 1px solid var(--accent-border); background: rgba(18, 18, 21, 0.55); transition: var(--transition); display: flex; flex-direction: column; }
+
+        /* Pour les projets avec image */
+        .portfolio-item img { width: 100%; height: 100%; object-fit: cover; transition: var(--transition); }
+        .portfolio-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10,10,15,0.85); display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; transition: var(--transition); padding: 20px; text-align: center; }
+        .portfolio-item:hover .portfolio-overlay { opacity: 1; }
+        .portfolio-item:hover img { transform: scale(1.1); }
+
+        /* Pour les projets sans image (Design stylisé) */
+        .portfolio-item.no-image { justify-content: center; align-items: center; text-align: center; padding: 20px; background: linear-gradient(135deg, var(--bg-card) 0%, #0a1f12 100%); }
+        .portfolio-item.no-image .code-icon { font-family: var(--font-mono); font-size: 3rem; color: var(--accent); opacity: 0.3; position: absolute; right: 20px; bottom: 10px; }
+        .portfolio-item.no-image h3 { font-size: 1.4rem; color: var(--accent); margin-bottom: 10px; z-index: 2; }
+        .portfolio-item.no-image p.snippet { font-size: 0.9rem; color: var(--text-secondary); z-index: 2; }
+
+        /* Bouton détails commun */
+        .btn-view { margin-top: 15px; padding: 8px 20px; background: transparent; border: 2px solid var(--accent); color: var(--accent); border-radius: 20px; text-transform: uppercase; font-size: 0.8rem; font-weight: bold; transition: var(--transition); z-index: 2; }
+        .btn-view:hover { background: var(--accent); color: var(--bg-primary); }
+
+        /* Modal pour détails projet */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(5px); opacity: 0; transition: var(--transition); }
+        .modal-overlay.active { display: flex; opacity: 1; }
+        .modal-content { background: rgba(18, 18, 21, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); width: 90%; max-width: 800px; max-height: 80vh; overflow-y: auto; border-radius: 12px; border: 1px solid var(--accent); padding: 40px; position: relative; }
+        .modal-close { position: absolute; top: 15px; right: 20px; font-size: 2rem; color: #fff; cursor: pointer; background: none; border: none; }
+        .modal-close:hover { color: var(--accent); }
+        .modal-body ul { margin-left: 20px; margin-top: 10px; color: var(--text-secondary); }
+        .modal-body li { margin-bottom: 8px; }
+
+        /* ===== CONTACT & FOOTER ===== */
+        #contact { text-align: center; }
+        .contact-info { margin-top: 30px; font-size: 1.2rem; }
+        .contact-info a { color: var(--accent); text-decoration: none; }
+        footer { padding: 30px; text-align: center; background: rgba(10, 10, 15, 0.7); backdrop-filter: blur(10px); border-top: 1px solid var(--accent-border); font-size: 0.9rem; }
+
+        /* ===== HAMBURGER BUTTON ===== */
+        .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px; z-index: 1100; }
+        .hamburger span { display: block; width: 26px; height: 3px; background: var(--text-primary); border-radius: 3px; transition: var(--transition); }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 6px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -6px); }
+
+        /* ===== MOBILE OVERLAY ===== */
+        .nav-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 999; opacity: 0; pointer-events: none; transition: var(--transition); }
+        .nav-overlay.active { opacity: 1; pointer-events: all; }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1100px) {
+            .navbar { padding: 12px 20px; }
+            .nav-links { gap: 12px; }
+            .nav-links a { font-size: 0.78rem; letter-spacing: 0.5px; }
+            .lang-switcher { gap: 5px; margin-left: 10px; }
+            .lang-btn { padding: 4px 7px; font-size: 0.75rem; }
+        }
+
+        @media (max-width: 900px) {
+            /* Hamburger visible */
+            .hamburger { display: flex; }
+
+            /* Nav links become slide-in panel */
+            .nav-links {
+                position: fixed; top: 0; right: -100%; width: 280px; height: 100vh;
+                flex-direction: column; gap: 0;
+                background: var(--bg-secondary); border-left: 1px solid var(--accent-border);
+                padding: 80px 30px 30px; z-index: 1050;
+                transition: right 0.4s ease;
+            }
+            .nav-links.nav-open { right: 0; }
+            .nav-links li { border-bottom: 1px solid rgba(255,255,255,0.05); }
+            .nav-links a { display: block; padding: 16px 0; font-size: 1rem; letter-spacing: 2px; }
+            .nav-links a:hover { color: var(--accent); padding-left: 10px; }
+
+            /* Lang switcher in navbar stays */
+            .lang-switcher { gap: 5px; margin-left: auto; margin-right: 10px; }
+            .lang-btn { padding: 4px 8px; font-size: 0.75rem; }
+
+            /* Hero */
+            #accueil { flex-direction: column-reverse; justify-content: center; text-align: center; padding-top: 100px; min-height: 100vh; }
+            .hero-content, .hero-image-container { width: 100%; height: auto; padding: 20px; }
+            .hero-image-container { clip-path: none; background: transparent; }
+            .hero-image { width: 220px; height: 220px; margin-top: 20px; }
+            .typing-container { justify-content: center; font-size: 1.6rem; height: auto; }
+            .hero-desc { text-align: center; margin: 0 auto 20px; }
+            .hero-role { font-size: 1rem; }
+
+            /* Sections */
+            .section { padding: 80px 5% 40px; min-height: auto; }
+            .section-title { font-size: 1.8rem; margin-bottom: 30px; letter-spacing: 2px; }
+
+            /* About tabs */
+            .about-tabs { gap: 8px; margin-bottom: 25px; }
+            .about-tab { padding: 8px 16px; font-size: 0.8rem; letter-spacing: 0.5px; }
+            .subsection-title { font-size: 1.3rem; margin-bottom: 20px; }
+            .about-intro { padding: 20px; }
+            .about-intro p { font-size: 0.95rem; }
+
+            /* Skills grid */
+            .skills-grid { grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; }
+            .skill-card { padding: 20px 12px; }
+            .skill-card i { font-size: 2rem; margin-bottom: 10px; }
+            .skill-card h4 { font-size: 0.9rem; }
+
+            /* Portfolio grid */
+            .portfolio-grid { grid-template-columns: 1fr; gap: 15px; }
+            .portfolio-item { height: 220px; }
+
+            /* Timeline */
+            .timeline { gap: 12px; }
+            .timeline-item { padding: 18px; gap: 15px; }
+            .timeline-logo { width: 45px; height: 45px; min-width: 45px; }
+            .timeline-title { font-size: 1.1rem; }
+
+            /* Modal */
+            .modal-content { width: 95%; padding: 25px 20px; max-height: 85vh; }
+
+            /* Contact */
+            .contact-info { font-size: 1rem; }
+
+            /* Footer */
+            footer { padding: 20px 15px; font-size: 0.8rem; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-image { width: 180px; height: 180px; }
+            .typing-container { font-size: 1.3rem; }
+            .hero-role { font-size: 0.85rem; letter-spacing: 1px; }
+            .hero-desc { font-size: 0.9rem; }
+            .section-title { font-size: 1.5rem; }
+            .skills-grid { grid-template-columns: repeat(2, 1fr); }
+            .skill-card h4 { font-size: 0.8rem; }
+            .portfolio-item { height: 200px; }
+            .portfolio-item.no-image h3 { font-size: 1.1rem; }
+            .btn-view { font-size: 0.7rem; padding: 6px 14px; }
+            .timeline-item { padding: 14px; }
+            .timeline-title { font-size: 1rem; }
+            .timeline-date { font-size: 0.8rem; }
+            .nav-links { width: 100%; }
+        }
+    </style>
 </head>
 <body>
+
+<!-- ===== ANIMATED WAVE BACKGROUND ===== -->
+<div class="wave-bg">
+    <svg viewBox="0 0 1440 900" preserveAspectRatio="none">
+        <path class="wave1" d="M0,450 C360,350 720,550 1440,400 L1440,900 L0,900 Z" fill="rgba(0, 230, 118, 0.04)"/>
+        <path class="wave2" d="M0,500 C300,420 600,580 1200,430 C1320,410 1380,440 1440,450 L1440,900 L0,900 Z" fill="rgba(0, 230, 118, 0.03)"/>
+        <path class="wave3" d="M0,550 C480,480 960,620 1440,500 L1440,900 L0,900 Z" fill="rgba(0, 230, 118, 0.02)"/>
+    </svg>
+    <svg viewBox="0 0 1440 900" preserveAspectRatio="none" style="position:absolute; top:0; left:0;">
+        <path class="wave2" d="M0,200 C240,120 720,300 1200,180 C1350,150 1400,200 1440,210 L1440,900 L0,900 Z" fill="rgba(0, 230, 118, 0.025)"/>
+        <path class="wave3" d="M0,300 C360,220 900,380 1440,260 L1440,900 L0,900 Z" fill="rgba(0, 230, 118, 0.015)"/>
+    </svg>
+</div>
+
+<div class="nav-overlay" id="navOverlay"></div>
 <nav class="navbar">
     <div class="nav-logo">
-        <img src="IntelliCV.png" alt="Logo IntelliCV" class="intellicv-logo">
-        <span class="tooltip" data-fr="IntelliCV : Un projet de la Suite Intelli pour faciliter la création de CV numériques." data-en="IntelliCV: A project of the Intelli Suite to simplify the creation of digital resumes.">IntelliCV : Un projet de la Suite Intelli pour faciliter la création de CV numériques.</span>
+        <img src="IntelliCV.png" alt="Logo" onerror="this.src='https://via.placeholder.com/40x40/00e676/0a0a0f?text=CV'">
     </div>
-    <ul>
-        <li><a href="#accueil" data-fr="Accueil" data-en="Home">Accueil</a></li>
-        <li><a href="#formations" data-fr="Formations" data-en="Education">Formations</a></li>
-        <li><a href="#competences" data-fr="Compétences" data-en="Skills">Compétences</a></li>
-        <li><a href="#experiences" data-fr="Expériences" data-en="Experience">Expériences</a></li>
-        <li><a href="#realisations" data-fr="Réalisations" data-en="Projects">Réalisations</a></li>
-        <li><a href="#loisirs" data-fr="Loisirs" data-en="Hobbies">Loisirs</a></li>
-        <li><a href="#contact" data-fr="Contact" data-en="Contact">Contact</a></li>
+    <ul class="nav-links" id="navLinks">
+        <li><a href="#accueil" class="t-nav-home">Accueil</a></li>
+        <li><a href="#about" class="t-nav-about">À propos</a></li>
+        <li><a href="#competences" class="t-nav-skills">Compétences</a></li>
+        <li><a href="#realisations" class="t-nav-portfolio">Portfolio</a></li>
+        <li><a href="#contact" class="t-nav-contact">Contact</a></li>
     </ul>
+    <div class="lang-switcher">
+        <button class="lang-btn active" onclick="switchLang('fr')"><img src="https://flagcdn.com/w40/fr.png" alt="FR" class="flag-icon"></button>
+        <button class="lang-btn" onclick="switchLang('en')"><img src="https://flagcdn.com/w40/gb.png" alt="EN" class="flag-icon"></button>
+        <button class="lang-btn" onclick="switchLang('es')"><img src="https://flagcdn.com/w40/es.png" alt="ES" class="flag-icon"></button>
+        <button class="lang-btn" onclick="switchLang('de')"><img src="https://flagcdn.com/w40/de.png" alt="DE" class="flag-icon"></button>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
 </nav>
 
-<section id="accueil" class="section">
-    <div class="card accueil-card animate">
-        <img src="Photo Nils Site.jpg" alt="Photo de Nils" class="profile-photo">
-        <h1 data-fr="Bienvenue sur mon CV numérique !" data-en="Welcome to my digital resume!">Bienvenue sur mon CV numérique !</h1>
-        <p data-fr="Je m'appelle Nils Vanderschooten-Akinmoladun, j’ai 20 ans et je suis étudiant en troisième année de BUT Informatique à l’Université de Lille. Passionné par le développement et les technologies, je travaille sur des projets variés en Java, C++, SQL, HTML et CSS."
-           data-en="My name is Nils Vanderschooten-Akinmoladun, I’m 20 years old, and I’m a third-year student in Computer Science (BUT) at the University of Lille. Passionate about development and technology, I work on various projects using Java, C++, SQL, HTML, and CSS.">Je m'appelle Nils Vanderschooten-Akinmoladun, j’ai 20 ans et je suis étudiant en troisième année de BUT Informatique à l’Université de Lille. Passionné par le développement et les technologies, je travaille sur des projets variés en Java, C++, SQL, HTML et CSS.</p>
-        <p data-fr="Mon parcours inclut des stages en support technique et vente, qui m’ont permis de développer une grande adaptabilité, ainsi que des projets universitaires enrichissants. Le football, que je pratique à l’US Lesquin, occupe une place importante dans ma vie, tout comme mes passions pour les jeux vidéo, l’automobile et le multimédia, qui inspirent mes créations."
-           data-en="My background includes internships in technical support and sales, which helped me develop strong adaptability, as well as enriching university projects. Football, which I play at US Lesquin, is a big part of my life, alongside my passions for video games, cars, and multimedia, which inspire my creations.">Mon parcours inclut des stages en support technique et vente, qui m’ont permis de développer une grande adaptabilité, ainsi que des projets universitaires enrichissants. Le football, que je pratique à l’US Lesquin, occupe une place importante dans ma vie, tout comme mes passions pour les jeux vidéo, l’automobile et le multimédia, qui inspirent mes créations.</p>
-        <p data-fr="Curieux et motivé, je recherche des opportunités pour approfondir mes compétences et contribuer à des projets innovants."
-           data-en="Curious and motivated, I’m looking for opportunities to deepen my skills and contribute to innovative projects.">Curieux et motivé, je recherche des opportunités pour approfondir mes compétences et contribuer à des projets innovants.</p>
+<section id="accueil">
+    <div class="hero-content">
+        <div class="typing-container">
+            <span id="typewriter"></span><span class="cursor"></span>
+        </div>
+        <div class="hero-role t-role">Développeur Front-end / UI Designer</div>
+        <p class="hero-desc t-desc">
+            Étudiant en 3ème année de BUT Informatique. Passionné par le développement et les technologies, je crée des applications robustes et des interfaces modernes.
+        </p>
+        <a href="#realisations" class="btn-view t-btn-discover" style="display:inline-block; margin-top: 10px;">Découvrir mes projets</a>
+    </div>
+    <div class="hero-image-container">
+        <img src="nilscvphoto.jpeg" alt="Nils" class="hero-image" onerror="this.src='https://via.placeholder.com/350x350/121215/00e676?text=Nils'">
     </div>
 </section>
 
-<section id="formations" class="section">
-    <div class="card animate">
-        <h2 data-fr="Formations" data-en="Education">Formations</h2>
-        <div class="formation-item">
-            <img src="UnivLille.png" alt="Logo Université de Lille" class="logo">
-            <div>
-                <h3 data-fr="BUT Informatique - 3ème Année" data-en="BUT Computer Science - 3rd Year">BUT Informatique - 3ème Année</h3>
-                <p><strong><span data-fr="Diplômé en DUT Informatique" data-en="Graduated with a DUT in Computer Science">Diplômé en DUT Informatique</span></strong></p>
-                <p data-fr="Université de Lille, Villeneuve d’Ascq" data-en="University of Lille, Villeneuve d’Ascq">Université de Lille, Villeneuve d’Ascq</p>
-                <p data-fr="Septembre 2023 - Présent" data-en="September 2023 - Present">Septembre 2023 - Présent</p>
+<section id="about" class="section reveal">
+    <h2 class="section-title t-title-about">À propos de moi</h2>
+
+    <div class="about-tabs">
+        <button class="about-tab active" onclick="switchTab('tab-intro')" data-tab="tab-intro"><span class="t-tab-intro">Présentation</span></button>
+        <button class="about-tab" onclick="switchTab('tab-parcours')" data-tab="tab-parcours"><span class="t-tab-parcours">Parcours & Formations</span></button>
+        <button class="about-tab" onclick="switchTab('tab-experiences')" data-tab="tab-experiences"><span class="t-tab-exp">Expériences Pro.</span></button>
+        <button class="about-tab" onclick="switchTab('tab-loisirs')" data-tab="tab-loisirs"><span class="t-tab-loisirs">Loisirs</span></button>
+    </div>
+
+    <!-- ONGLET 0 : Présentation -->
+    <div id="tab-intro" class="about-panel active">
+        <div class="about-intro">
+            <p class="t-about-intro">Je m'appelle Nils Vanderschooten-Akinmoladun, j'ai 20 ans et je suis étudiant en troisième année de BUT Informatique à l'Université de Lille. </p>
+            <p class="t-about-intro-2">Passionné par le développement et les technologies, je suis constamment à la recherche de nouveaux défis pour créer des applications robustes et des interfaces modernes.</p>
+        </div>
+    </div>
+
+    <!-- ONGLET 1 : Parcours & Formations -->
+    <div id="tab-parcours" class="about-panel">
+        <h3 class="subsection-title t-sub-parcours">Parcours & Formations</h3>
+        <div class="timeline">
+            <div class="timeline-item">
+                <img src="UnivLille.png" alt="Logo Université de Lille" class="timeline-logo">
+                <div>
+                    <span class="timeline-date">Septembre 2023 - Présent</span>
+                    <h3 class="timeline-title t-edu-1-title">BUT Informatique - 3ème Année</h3>
+                    <p class="t-edu-1-desc">Université de Lille, Villeneuve d'Ascq. Diplômé en DUT Informatique.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <img src="Logo Certificat Cambridge.jpg" alt="Logo Cambridge" class="timeline-logo">
+                <div>
+                    <span class="timeline-date">2023</span>
+                    <h3 class="timeline-title t-edu-cambridge-title">Cambridge Certificate</h3>
+                    <p class="t-edu-cambridge-desc">Certification d'anglais obtenue en 2023.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <img src="eic.jpeg" alt="Logo Lycée EIC" class="timeline-logo">
+                <div>
+                    <span class="timeline-date">2021 - 2023</span>
+                    <h3 class="timeline-title t-edu-2-title">Baccalauréat Général</h3>
+                    <p class="t-edu-2-desc">Lycée EIC Tourcoing.</p>
+                </div>
             </div>
         </div>
-        <div class="formation-item">
-            <img src="Logo Certificat Cambridge.jpg" alt="Logo Cambridge" class="logo">
-            <div>
-                <h3 data-fr="Cambridge Certificate" data-en="Cambridge Certificate">Cambridge Certificate</h3>
-                <p>2023</p>
+    </div>
+
+    <!-- ONGLET 2 : Expériences Professionnelles -->
+    <div id="tab-experiences" class="about-panel">
+        <h3 class="subsection-title t-sub-exp">Expériences Professionnelles</h3>
+        <div class="timeline">
+            <div class="timeline-item">
+                <span class="timeline-date">Avril 2025 - Juin 2025</span>
+                <h3 class="timeline-title t-exp-1-title">Stage Erasmus à Wildau</h3>
+                <p class="t-exp-1-detail">Réalisation de projets dans le domaine des infrastructures et des télécommunications. Développement d'une application mobile (Aéroport Berlin) en binôme à l'Institut Universitaire de Technologie de Wildau.</p>
+            </div>
+            <div class="timeline-item">
+                <span class="timeline-date t-exp-helpdesk-date">Avril 2022 (1 semaine)</span>
+                <h3 class="timeline-title t-exp-helpdesk-title">Stage HelpDesk - Camaïeu</h3>
+                <p class="t-exp-helpdesk-desc">Assistance aux utilisateurs et résolution de problèmes techniques. Support client et gestion des incidents.</p>
+            </div>
+            <div class="timeline-item">
+                <span class="timeline-date">2021</span>
+                <h3 class="timeline-title t-exp-micromania-title">Mini-job en vente - Micromania Leers</h3>
+                <p class="t-exp-micromania-desc">Vente, conseil client et gestion des stocks.</p>
+            </div>
+            <div class="timeline-item">
+                <span class="timeline-date">2020</span>
+                <h3 class="timeline-title t-exp-emaho-title">Stage de 3ème - Emaho Roubaix</h3>
+                <p class="t-exp-emaho-desc">Conception sonore et numérique. Création de contenu numérique et techniques de conception sonore.</p>
             </div>
         </div>
-        <div class="formation-item">
-            <img src="eic.jpeg" alt="Logo Lycée EIC" class="logo">
-            <div>
-                <h3 data-fr="Baccalauréat Général" data-en="General Baccalaureate">Baccalauréat Général</h3>
-                <p data-fr="Lycée EIC Tourcoing" data-en="EIC Tourcoing High School">Lycée EIC Tourcoing</p>
-                <p>2021-2023</p>
+    </div>
+
+    <!-- ONGLET 3 : Loisirs -->
+    <div id="tab-loisirs" class="about-panel">
+        <h3 class="subsection-title t-sub-loisirs">Loisirs</h3>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <i>⚽</i>
+                <h4 class="t-hobby-football">Football : US Lesquin</h4>
+                <p style="color:var(--text-secondary); font-size:0.85rem; margin-top:8px;" class="t-hobby-football-desc">8 saisons, membre depuis juillet 2024. Leadership et cohésion d'équipe.</p>
+            </div>
+            <div class="skill-card">
+                <i>🎮</i>
+                <h4 class="t-hobby-games">Jeux vidéo</h4>
+                <p style="color:var(--text-secondary); font-size:0.85rem; margin-top:8px;" class="t-hobby-games-desc">Passion pour les jeux de stratégie et d'aventure. Collection de jeux et consoles.</p>
+            </div>
+            <div class="skill-card">
+                <i>💻</i>
+                <h4 class="t-hobby-it">Informatique & Multimédia</h4>
+                <p style="color:var(--text-secondary); font-size:0.85rem; margin-top:8px;" class="t-hobby-it-desc">Projets personnels en développement web et logiciels. Création de contenus multimédias.</p>
+            </div>
+            <div class="skill-card">
+                <i>🚗</i>
+                <h4 class="t-hobby-auto">Automobile</h4>
+                <p style="color:var(--text-secondary); font-size:0.85rem; margin-top:8px;" class="t-hobby-auto-desc">Passion pour l'histoire et la mécanique automobile.</p>
             </div>
         </div>
     </div>
 </section>
 
-<section id="competences" class="section">
-    <div class="card animate">
-        <div class="image-container">
-            <img src="competences.jpeg" alt="Compétences" class="section-image">
+<section id="competences" class="section reveal">
+    <h2 class="section-title t-title-skills">Compétences</h2>
+    <div class="skills-grid">
+        <div class="skill-card">
+            <img src="competences/java.png" alt="Java" class="skill-icon">
+            <h4>Java</h4>
         </div>
-        <h2 data-fr="Compétences" data-en="Skills">Compétences</h2>
-        <div class="competences-list">
-            <h3 data-fr="Savoir-faire" data-en="Technical Skills">Savoir-faire</h3>
-            <ul>
-                <li data-fr="Création de sites web (HTML, CSS, JavaScript)" data-en="Web development (HTML, CSS, JavaScript)">Création de sites web (HTML, CSS, JavaScript)</li>
-                <li data-fr="Programmation (Java, Python, C++)" data-en="Programming (Java, Python, C++)">Programmation (Java, Python, C++)</li>
-                <li data-fr="Assistance informatique (montage/démontage PC, machines virtuelles)" data-en="IT support (PC assembly/disassembly, virtual machines)">Assistance informatique (montage/démontage PC, machines virtuelles)</li>
-                <li data-fr="Gestion de bases de données (SQL)" data-en="Database management (SQL)">Gestion de bases de données (SQL)</li>
-            </ul>
-            <h3 data-fr="Savoir-être" data-en="Soft Skills">Savoir-être</h3>
-            <ul>
-                <li data-fr="Travail en équipe" data-en="Teamwork">Travail en équipe</li>
-                <li data-fr="Résolution de problèmes" data-en="Problem-solving">Résolution de problèmes</li>
-                <li data-fr="Adaptabilité" data-en="Adaptability">Adaptabilité</li>
-                <li data-fr="Autonomie" data-en="Autonomy">Autonomie</li>
-                <li data-fr="Permis B" data-en="Driver's License B">Permis B</li>
-            </ul>
-            <h3 data-fr="Langues" data-en="Languages">Langues</h3>
-            <ul>
-                <li data-fr="Anglais (C1)" data-en="English (C1)">Anglais (C1)</li>
-                <li data-fr="Allemand (B2)" data-en="German (B2)">Allemand (B2)</li>
-            </ul>
+        <div class="skill-card">
+            <img src="competences/c++.png" alt="C++" class="skill-icon">
+            <h4>C++</h4>
+        </div>
+        <div class="skill-card">
+            <img src="competences/Python.png" alt="Python" class="skill-icon">
+            <h4>Python</h4>
+        </div>
+        <div class="skill-card">
+            <img src="competences/Kotlin_Icon.png" alt="Kotlin" class="skill-icon">
+            <h4>Kotlin</h4>
+        </div>
+        <div class="skill-card">
+            <img src="competences/js.png" alt="JavaScript" class="skill-icon">
+            <h4>JavaScript</h4>
+        </div>
+        <div class="skill-card">
+            <img src="competences/html5.png" alt="HTML5" class="skill-icon">
+            <h4>HTML5</h4>
+        </div>
+        <div class="skill-card">
+            <img src="competences/css3.png" alt="CSS3" class="skill-icon">
+            <h4>CSS3</h4>
+        </div>
+        <div class="skill-card">
+            <img src="competences/restapi.png" alt="API REST" class="skill-icon">
+            <h4>API REST</h4>
+        </div>
+        <div class="skill-card">
+            <img src="competences/Spring_Boot.png" alt="Spring Boot" class="skill-icon">
+            <h4>Spring Boot</h4>
+        </div>
+        <div class="skill-card">
+            <img src="competences/react.png" alt="React" class="skill-icon">
+            <h4>React</h4>
+        </div>
+        <div class="skill-card">
+            <img src="competences/javafx.png" alt="JavaFX" class="skill-icon">
+            <h4>JavaFX</h4>
+        </div>
+        <div class="skill-card">
+            <img src="competences/nodejs.webp" alt="Node.js" class="skill-icon">
+            <h4>Node.js</h4>
+        </div>
+        <div class="skill-card">
+            <img src="competences/sql.avif" alt="SQL" class="skill-icon">
+            <h4>SQL / PostgreSQL / MySQL / H2 / MongoDB</h4>
+        </div>
+        <div class="skill-card">
+            <img src="competences/git.png" alt="Git" class="skill-icon">
+            <h4>Git / GitLab</h4>
+        </div>
+        <div class="skill-card">
+            <img src="competences/Maven.png" alt="Maven" class="skill-icon">
+            <h4>Maven</h4>
+        </div>
+        <div class="skill-card">
+            <i>🐳</i>
+            <h4 class="t-skill-docker">Docker / Machines virtuelles</h4>
+        </div>
+        <div class="skill-card">
+            <i>🐧</i>
+            <h4 class="t-skill-linux">Admin Système Linux</h4>
+        </div>
+        <div class="skill-card">
+            <i>🔧</i>
+            <h4 class="t-skill-hardware">Assistance info (montage/démontage PC)</h4>
+        </div>
+        <div class="skill-card">
+            <i>🤝</i>
+            <h4 class="t-skill-soft">Travail d'équipe / Adaptabilité</h4>
+        </div>
+        <div class="skill-card">
+            <i>🧠</i>
+            <h4 class="t-skill-problem">Résolution de problèmes / Autonomie</h4>
+        </div>
+        <div class="skill-card">
+            <i>🚗</i>
+            <h4 class="t-skill-permit">Permis B</h4>
+        </div>
+        <div class="skill-card">
+            <i>🗣️</i>
+            <h4 class="t-skill-lang">Anglais (C1) / Allemand (B2)</h4>
         </div>
     </div>
 </section>
 
-<section id="experiences" class="section">
-    <div class="card animate">
-        <div class="image-container">
-            <img src="experiences.jpg" alt="Expériences" class="section-image">
+
+<section id="realisations" class="section reveal">
+    <h2 class="section-title t-title-portfolio">Réalisations</h2>
+
+    <div class="portfolio-grid">
+        <div class="portfolio-item">
+            <img src="IntelliCV.png" alt="IntelliCV" onerror="this.src='https://via.placeholder.com/400x250/0a0a0f/00e676?text=IntelliCV'">
+            <div class="portfolio-overlay">
+                <h3 class="t-proj-1-title">IntelliCV - Portfolio Numérique</h3>
+                <button class="btn-view t-btn-view" onclick="openModal('modal-1')">Voir détails</button>
+            </div>
         </div>
-        <h2 data-fr="Expériences Professionnelles" data-en="Professional Experience">Expériences Professionnelles</h2>
-        <table class="experience-table">
-            <thead>
-            <tr>
-                <th data-fr="Poste" data-en="Position">Poste</th>
-                <th data-fr="Dates" data-en="Dates">Dates</th>
-                <th data-fr="Description" data-en="Description">Description</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td data-fr="Stage Erasmus à Wildau" data-en="Erasmus Internship in Wildau">Stage Erasmus à Wildau</td>
-                <td data-fr="Avril 2025 - Juin 2025" data-en="April 2025 - June 2025">Avril 2025 - Juin 2025</td>
-                <td>
-                    <p data-fr="Réalisation de projets dans le domaine des infrastructures et des télécommunications."
-                       data-en="Carrying out projects in the field of infrastructure and telecommunications.">Réalisation de projets dans le domaine des infrastructures et des télécommunications.</p>
-                    <ul>
-                        <li data-fr="Réalisé avec un binôme" data-en="Completed with a partner">Réalisé avec un binôme</li>
-                        <li data-fr="À l’Institut Universitaire de Technologie de Wildau" data-en="At the Wildau University of Technology">À l’Institut Universitaire de Technologie de Wildau</li>
-                        <li data-fr="Développement application mobile (Aéroport Berlin)" data-en="Mobile app development (Berlin Airport)">Développement application mobile (Aéroport Berlin)</li>
-                    </ul>
-                </td>
-            </tr>
-            <tr>
-                <td data-fr="Stage HelpDesk - Camaïeu" data-en="HelpDesk Internship - Camaïeu">Stage HelpDesk - Camaïeu</td>
-                <td data-fr="Avril 2022 (1 semaine)" data-en="April 2022 (1 week)">Avril 2022 (1 semaine)</td>
-                <td>
-                    <p data-fr="Assistance aux utilisateurs et résolution de problèmes techniques."
-                       data-en="User assistance and technical problem-solving.">Assistance aux utilisateurs et résolution de problèmes techniques.</p>
-                    <ul>
-                        <li data-fr="Support client" data-en="Customer support">Support client</li>
-                        <li data-fr="Gestion des incidents" data-en="Incident management">Gestion des incidents</li>
-                    </ul>
-                </td>
-            </tr>
-            <tr>
-                <td data-fr="Mini-job en vente - Micromania Leers" data-en="Sales Mini-Job - Micromania Leers">Mini-job en vente - Micromania Leers</td>
-                <td>2021</td>
-                <td>
-                    <p data-fr="Vente, conseil client et gestion des stocks."
-                       data-en="Sales, customer advice, and stock management.">Vente, conseil client et gestion des stocks.</p>
-                    <ul>
-                        <li data-fr="Service client" data-en="Customer service">Service client</li>
-                        <li data-fr="Organisation" data-en="Organization">Organisation</li>
-                    </ul>
-                </td>
-            </tr>
-            <tr>
-                <td data-fr="Stage de 3ème - Emaho Roubaix" data-en="9th Grade Internship - Emaho Roubaix">Stage de 3ème - Emaho Roubaix</td>
-                <td>2020</td>
-                <td>
-                    <p data-fr="Conception sonore et numérique."
-                       data-en="Sound and digital design.">Conception sonore et numérique.</p>
-                    <ul>
-                        <li data-fr="Création de contenu numérique" data-en="Digital content creation">Création de contenu numérique</li>
-                        <li data-fr="Techniques de conception sonore" data-en="Sound design techniques">Techniques de conception sonore</li>
-                    </ul>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</section>
 
-<section id="realisations" class="section">
-    <div class="card animate">
-        <div class="image-container">
-            <img src="realisations.jpg" alt="Réalisations" class="section-image">
+        <div class="portfolio-item">
+            <img src="intellib.png" alt="Réservation Piscine" onerror="this.src='https://via.placeholder.com/400x250/0a0a0f/00e676?text=Piscine'">
+            <div class="portfolio-overlay">
+                <h3 class="t-proj-2-title">Réservation Piscine</h3>
+                <button class="btn-view t-btn-view" onclick="openModal('modal-2')">Voir détails</button>
+            </div>
         </div>
-        <h2 data-fr="Réalisations" data-en="Projects">Réalisations</h2>
-        <table class="realisations-table">
-            <thead>
-            <tr>
-                <th data-fr="Titre" data-en="Title">Titre</th>
-                <th data-fr="Année" data-en="Year">Année</th>
-                <th data-fr="Actions" data-en="Actions">Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td data-fr="Ecosystème Mobile AIrTarNils (Android & Backend)" data-en="AIrTarNils Mobile Ecosystem (Android & Backend)">Ecosystème Mobile AIrTarNils (Android & Backend)</td>
-                <td>2025</td>
-                <td>
-                    <button class="toggle-btn" data-target="realisations-new-1" data-fr="Voir le projet" data-en="View Project">Voir le projet</button>
-                </td>
-            </tr>
-            <tr id="realisations-new-1" class="sub-section-row">
-                <td colspan="3">
-                    <div class="sub-section">
-                        <p><strong data-fr="Résumé du projet :" data-en="Project Summary:">Résumé du projet :</strong>
-                            <span data-fr="Conception complète d'une solution de gestion pour employés d'aéroport (Projet Stage Wildau). Le système comprend une application Android native (Kotlin/Java) offrant la gestion de tâches et la géolocalisation temps réel (Google Maps, Room, Firebase), connectée à une API REST sécurisée développée en Spring Boot (Java 17, PostgreSQL) remplaçant une architecture JDBC obsolète."
-                                  data-en="Complete design of an airport employee management solution (Wildau Internship Project). The system includes a native Android app (Kotlin/Java) offering task management and real-time geolocation (Google Maps, Room, Firebase), connected to a secure REST API developed in Spring Boot (Java 17, PostgreSQL) replacing an obsolete JDBC architecture.">Conception complète d'une solution de gestion pour employés d'aéroport (Projet Stage Wildau)...</span></p>
-                        <p><strong data-fr="Compétences techniques acquises :" data-en="Technical Skills Acquired:">Compétences techniques acquises :</strong></p>
-                        <ul>
-                            <li data-fr="Dév. Mobile : Kotlin, Java, Room, WorkManager, Google Maps SDK" data-en="Mobile Dev: Kotlin, Java, Room, WorkManager, Google Maps SDK">Dév. Mobile : Kotlin, Java, Room, WorkManager, Google Maps SDK</li>
-                            <li data-fr="Backend : Spring Boot, API REST, Java 17, Hibernate, PostgreSQL" data-en="Backend: Spring Boot, REST API, Java 17, Hibernate, PostgreSQL">Backend : Spring Boot, API REST, Java 17, Hibernate, PostgreSQL</li>
-                            <li data-fr="Services : Firebase Cloud Messaging, Géocodage" data-en="Services: Firebase Cloud Messaging, Geocoding">Services : Firebase Cloud Messaging, Géocodage</li>
-                            <li data-fr="Outils : Docker, Git, Retrofit" data-en="Tools: Docker, Git, Retrofit">Outils : Docker, Git, Retrofit</li>
-                        </ul>
-                        <p><strong data-fr="Savoir-être acquis :" data-en="Soft Skills Acquired:">Savoir-être acquis :</strong></p>
-                        <ul>
-                            <li data-fr="Architecture logicielle (Mobile + API)" data-en="Software architecture (Mobile + API)">Architecture logicielle (Mobile + API)</li>
-                            <li data-fr="Résolution de dette technique" data-en="Technical debt resolution">Résolution de dette technique</li>
-                            <li data-fr="Travail en environnement international" data-en="Working in an international environment">Travail en environnement international</li>
-                        </ul>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td data-fr="Application JavaFX de Gestion de Trajets" data-en="JavaFX Trip Management Application">Application JavaFX de Gestion de Trajets</td>
-                <td>2024</td>
-                <td>
-                    <button class="toggle-btn" data-target="realisations-1" data-fr="Voir le projet" data-en="View Project">Voir le projet</button>
-                </td>
-            </tr>
-            <tr id="realisations-1" class="sub-section-row">
-                <td colspan="3">
-                    <div class="sub-section">
-                        <p><strong data-fr="Résumé du projet :" data-en="Project Summary:">Résumé du projet :</strong>
-                            <span data-fr="Développement d’une application JavaFX pour optimiser des trajets en temps réel à l’aide de graphes. Elle offre une interface intuitive pour visualiser et gérer les itinéraires, réalisée en équipe de trois."
-                                  data-en="Development of a JavaFX application to optimize real-time trips using graphs. It offers an intuitive interface to visualize and manage routes, completed in a team of three.">Développement d’une application JavaFX pour optimiser des trajets en temps réel à l’aide de graphes. Elle offre une interface intuitive pour visualiser et gérer les itinéraires, réalisée en équipe de trois.</span></p>
-                        <p><strong data-fr="Compétences techniques acquises :" data-en="Technical Skills Acquired:">Compétences techniques acquises :</strong></p>
-                        <ul>
-                            <li data-fr="Programmation en JavaFX" data-en="JavaFX programming">Programmation en JavaFX</li>
-                            <li data-fr="Utilisation de graphes pour l’optimisation" data-en="Uses graphs for optimization">Utilisation de graphes pour l’optimisation</li>
-                            <li data-fr="Conception d’interfaces utilisateur" data-en="User interface design">Conception d’interfaces utilisateur</li>
-                        </ul>
-                        <p><strong data-fr="Savoir-être acquis :" data-en="Soft Skills Acquired:">Savoir-être acquis :</strong></p>
-                        <ul>
-                            <li data-fr="Travail en équipe" data-en="Teamwork">Travail en équipe</li>
-                            <li data-fr="Gestion de projet" data-en="Project management">Gestion de projet</li>
-                            <li data-fr="Communication" data-en="Communication">Communication</li>
-                        </ul>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td data-fr="Jeu 'Qui veut gagner des Millions' en Python" data-en="'Who Wants to Be a Millionaire' Game in Python">Jeu "Qui veut gagner des Millions" en Python</td>
-                <td>2024</td>
-                <td>
-                    <button class="toggle-btn" data-target="realisations-2" data-fr="Voir le projet" data-en="View Project">Voir le projet</button>
-                </td>
-            </tr>
-            <tr id="realisations-2" class="sub-section-row">
-                <td colspan="3">
-                    <div class="sub-section">
-                        <p><strong data-fr="Résumé du projet :" data-en="Project Summary:">Résumé du projet :</strong>
-                            <span data-fr="Création d’un jeu en Python inspiré de 'Qui veut gagner des Millions', avec un contrôleur complet, une gestion des scores et des paliers. Projet personnel visant à simuler une expérience télévisée interactive."
-                                  data-en="Creation of a Python game inspired by 'Who Wants to Be a Millionaire,' with a full controller, score, and level management. A personal project aimed at simulating an interactive TV experience.">Création d’un jeu en Python inspiré de "Qui veut gagner des Millions", avec un contrôleur complet, une gestion des scores et des paliers. Projet personnel visant à simuler une expérience télévisée interactive.</span></p>
-                        <p><strong data-fr="Compétences techniques acquises :" data-en="Technical Skills Acquired:">Compétences techniques acquises :</strong></p>
-                        <ul>
-                            <li data-fr="Programmation en Python" data-en="Python programming">Programmation en Python</li>
-                            <li data-fr="Gestion des entrées/sorties" data-en="Input/output management">Gestion des entrées/sorties</li>
-                            <li data-fr="Conception de logique de jeu" data-en="Game logic design">Conception de logique de jeu</li>
-                        </ul>
-                        <p><strong data-fr="Savoir-être acquis :" data-en="Soft Skills Acquired:">Savoir-être acquis :</strong></p>
-                        <ul>
-                            <li data-fr="Autonomie" data-en="Autonomy">Autonomie</li>
-                            <li data-fr="Créativité" data-en="Creativity">Créativité</li>
-                            <li data-fr="Planification" data-en="Planning">Planification</li>
-                        </ul>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td data-fr="Application IntelliClassify" data-en="IntelliClassify Application">Application IntelliClassify</td>
-                <td>2024</td>
-                <td>
-                    <button class="toggle-btn" data-target="realisations-3" data-fr="Voir le projet" data-en="View Project">Voir le projet</button>
-                </td>
-            </tr>
-            <tr id="realisations-3" class="sub-section-row">
-                <td colspan="3">
-                    <div class="sub-section">
-                        <img src="intelliclassify.png" alt="Visuel IntelliClassify" class="project-image">
-                        <p><strong data-fr="Résumé du projet :" data-en="Project Summary:">Résumé du projet :</strong>
-                            <span data-fr="Développement d’un outil de chargement et d’affichage de données CSV, avec classification supervisée via l’algorithme KNN. L’application permet de visualiser des nuages de points, de sélectionner des attributs, de choisir une catégorie et de classer de nouvelles données avec des distances (euclidienne, Manhattan) et des pondérations ajustables. Réalisé en groupe de quatre."
-                                  data-en="Development of a tool for loading and displaying CSV data, with supervised classification using the KNN algorithm. The app allows visualization of point clouds, attribute selection, category choice, and classification of new data with adjustable distances (Euclidean, Manhattan) and weights. Completed in a group of four.">Développement d’un outil de chargement et d’affichage de données CSV, avec classification supervisée via l’algorithme KNN. L’application permet de visualiser des nuages de points, de sélectionner des attributs, de choisir une catégorie et de classer de nouvelles données avec des distances (euclidienne, Manhattan) et des pondérations ajustables. Réalisé en groupe de quatre.</span></p>
-                        <p><strong data-fr="Compétences techniques acquises :" data-en="Technical Skills Acquired:">Compétences techniques acquises :</strong></p>
-                        <ul>
-                            <li data-fr="Programmation en Java et Java FX" data-en="Programming in Java and JavaFX">Programmation en Java et Java FX</li>
-                            <li data-fr="Manipulation de fichiers CSV" data-en="CSV file handling">Manipulation de fichiers CSV</li>
-                            <li data-fr="Implémentation de l’algorithme KNN" data-en="KNN algorithm implementation">Implémentation de l’algorithme KNN</li>
-                            <li data-fr="Gestion de données multidimensionnelles" data-en="Multidimensional data management">Gestion de données multidimensionnelles</li>
-                            <li data-fr="Évaluation de modèles de classification" data-en="Classification model evaluation">Évaluation de modèles de classification</li>
-                        </ul>
-                        <p><strong data-fr="Savoir-être acquis :" data-en="Soft Skills Acquired:">Savoir-être acquis :</strong></p>
-                        <ul>
-                            <li data-fr="Travail en équipe" data-en="Teamwork">Travail en équipe</li>
-                            <li data-fr="Gestion de projet" data-en="Project management">Gestion de projet</li>
-                            <li data-fr="Communication technique" data-en="Technical communication">Communication technique</li>
-                            <li data-fr="Résolution de problèmes" data-en="Problem-solving">Résolution de problèmes</li>
-                            <li data-fr="Adaptabilité" data-en="Adaptability">Adaptabilité</li>
-                        </ul>
-                        <p><a href="https://gitlab.univ-lille.fr/sae302/2024/I4_SAE3.3" data-fr="Lien vers le Gitlab" data-en="Link to Gitlab">Lien vers le Gitlab</a></p>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td data-fr="Solution de Communication Matrix" data-en="Matrix Communication Solution">Solution de Communication Matrix</td>
-                <td>2024</td>
-                <td>
-                    <button class="toggle-btn" data-target="realisations-4" data-fr="Voir le projet" data-en="View Project">Voir le projet</button>
-                </td>
-            </tr>
-            <tr id="realisations-4" class="sub-section-row">
-                <td colspan="3">
-                    <div class="sub-section">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSd-6muNbm4JGuomqy6Ty-zs4ynWEawx-cwcQ&s" alt="Visuel Matrix" class="project-image">
-                        <p><strong data-fr="Résumé du projet :" data-en="Project Summary:">Résumé du projet :</strong>
-                            <span data-fr="Mise en place d’un service de communication basé sur Matrix, offrant des échanges synchrones et asynchrones sécurisés (chiffrement de bout en bout). Accessible via web, desktop ou mobile, il supporte les discussions individuelles et de groupe avec Synapse et Element."
-                                  data-en="Implementation of a Matrix-based communication service offering secure synchronous and asynchronous exchanges (end-to-end encryption). Accessible via web, desktop, or mobile, it supports individual and group discussions with Synapse and Element.">Mise en place d’un service de communication basé sur Matrix, offrant des échanges synchrones et asynchrones sécurisés (chiffrement de bout en bout). Accessible via web, desktop ou mobile, il supporte les discussions individuelles et de groupe avec Synapse et Element.</span></p>
-                        <p><strong data-fr="Compétences techniques acquises :" data-en="Technical Skills Acquired:">Compétences techniques acquises :</strong></p>
-                        <ul>
-                            <li data-fr="Configuration de serveurs Matrix (Synapse)" data-en="Matrix server configuration (Synapse)">Configuration de serveurs Matrix (Synapse)</li>
-                            <li data-fr="Intégration de clients (Element)" data-en="Client integration (Element)">Intégration de clients (Element)</li>
-                            <li data-fr="Gestion de la sécurité et du chiffrement" data-en="Security and encryption management">Gestion de la sécurité et du chiffrement</li>
-                            <li data-fr="Administration système" data-en="System administration">Administration système</li>
-                        </ul>
-                        <p><strong data-fr="Savoir-être acquis :" data-en="Soft Skills Acquired:">Savoir-être acquis :</strong></p>
-                        <ul>
-                            <li data-fr="Travail en équipe" data-en="Teamwork">Travail en équipe</li>
-                            <li data-fr="Gestion de projet" data-en="Project management">Gestion de projet</li>
-                            <li data-fr="Communication" data-en="Communication">Communication</li>
-                            <li data-fr="Résolution de problèmes" data-en="Problem-solving">Résolution de problèmes</li>
-                            <li data-fr="Adaptabilité" data-en="Adaptability">Adaptabilité</li>
-                        </ul>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td data-fr="IntelliSocial - Réseau Social Étudiant" data-en="IntelliSocial - Student Social Network">IntelliSocial - Réseau Social Étudiant</td>
-                <td>2025</td>
-                <td>
-                    <button class="toggle-btn" data-target="realisations-5" data-fr="Voir le projet" data-en="View Project">Voir le projet</button>
-                </td>
-            </tr>
-            <tr id="realisations-5" class="sub-section-row">
-                <td colspan="3">
-                    <div class="sub-section">
-                        <img src="intellisocial.png" alt="Visuel IntelliSocial" class="project-image">
-                        <p><strong data-fr="Résumé du projet :" data-en="Project Summary:">Résumé du projet :</strong>
-                            <span data-fr="Développement d’une application web de réseau social, IntelliSocial, permettant de créer des fils de discussion, poster des messages et lire les contributions. Basée sur une architecture MVC avec une base de données relationnelle pour gérer les interactions."
-                                  data-en="Development of a web-based social network app, IntelliSocial, enabling the creation of discussion threads, posting messages, and reading contributions. Built on an MVC architecture with a relational database to manage interactions.">Développement d’une application web de réseau social, IntelliSocial, permettant de créer des fils de discussion, poster des messages et lire les contributions. Basée sur une architecture MVC avec une base de données relationnelle pour gérer les interactions.</span></p>
-                        <p><strong data-fr="Compétences techniques acquises :" data-en="Technical Skills Acquired:">Compétences techniques acquises :</strong></p>
-                        <ul>
-                            <li data-fr="Programmation backend (Java, JSP)" data-en="Backend programming (Java, JSP)">Programmation backend (Java, JSP)</li>
-                            <li data-fr="Architecture MVC" data-en="MVC architecture">Architecture MVC</li>
-                            <li data-fr="Gestion de bases de données (SQL)" data-en="Database management (SQL)">Gestion de bases de données (SQL)</li>
-                            <li data-fr="Authentification et autorisation" data-en="Authentication and authorization">Authentification et autorisation</li>
-                            <li data-fr="Tests unitaires" data-en="Unit testing">Tests unitaires</li>
-                        </ul>
-                        <p><strong data-fr="Savoir-être acquis :" data-en="Soft Skills Acquired:">Savoir-être acquis :</strong></p>
-                        <ul>
-                            <li data-fr="Travail en équipe" data-en="Teamwork">Travail en équipe</li>
-                            <li data-fr="Gestion de projet agile" data-en="Agile project management">Gestion de projet agile</li>
-                            <li data-fr="Communication technique" data-en="Technical communication">Communication technique</li>
-                            <li data-fr="Résolution de bugs" data-en="Bug resolution">Résolution de bugs</li>
-                            <li data-fr="Respect des délais" data-en="Meeting deadlines">Respect des délais</li>
-                        </ul>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td data-fr="Jeu Multi-joueur en Ligne - Agar.io-like" data-en="Online Multiplayer Game - Agar.io-like">Jeu Multi-joueur en Ligne - Agar.io-like</td>
-                <td>2025</td>
-                <td>
-                    <button class="toggle-btn" data-target="realisations-6" data-fr="Voir le projet" data-en="View Project">Voir le projet</button>
-                </td>
-            </tr>
-            <tr id="realisations-6" class="sub-section-row">
-                <td colspan="3">
-                    <div class="sub-section">
-                        <img src="HAGARIO.png" alt="Visuel Jeu Multi-joueur" class="project-image">
-                        <p><strong data-fr="Résumé du projet :" data-en="Project Summary:">Résumé du projet :</strong>
-                            <span data-fr="Création d’un jeu en ligne multi-joueur inspiré d’Agar.io, où des entités grandissent en absorbant d’autres dans un environnement en temps réel. Développé avec des technologies web (frontend) et un serveur (backend) pour gérer les interactions."
-                                  data-en="Creation of an online multiplayer game inspired by Agar.io, where entities grow by absorbing others in a real-time environment. Developed with web technologies (frontend) and a server (backend) to manage interactions.">Création d’un jeu en ligne multi-joueur inspiré d’Agar.io, où des entités grandissent en absorbant d’autres dans un environnement en temps réel. Développé avec des technologies web (frontend) et un serveur (backend) pour gérer les interactions.</span></p>
-                        <p><strong data-fr="Compétences techniques acquises :" data-en="Technical Skills Acquired:">Compétences techniques acquises :</strong></p>
-                        <ul>
-                            <li data-fr="Programmation frontend (HTML5, CSS, JavaScript)" data-en="Frontend programming (HTML5, CSS, JavaScript)">Programmation frontend (HTML5, CSS, JavaScript)</li>
-                            <li data-fr="Programmation backend (Node.js, WebSockets)" data-en="Backend programming (Node.js, WebSockets)">Programmation backend (Node.js, WebSockets)</li>
-                            <li data-fr="Gestion de la concurrence" data-en="Concurrency management">Gestion de la concurrence</li>
-                            <li data-fr="Optimisation des performances" data-en="Performance optimization">Optimisation des performances</li>
-                            <li data-fr="Design de jeux" data-en="Game design">Design de jeux</li>
-                        </ul>
-                        <p><strong data-fr="Savoir-être acquis :" data-en="Soft Skills Acquired:">Savoir-être acquis :</strong></p>
-                        <ul>
-                            <li data-fr="Travail en équipe" data-en="Teamwork">Travail en équipe</li>
-                            <li data-fr="Gestion de projet" data-en="Project management">Gestion de projet</li>
-                            <li data-fr="Créativité" data-en="Creativity">Créativité</li>
-                            <li data-fr="Résolution de problèmes" data-en="Problem-solving">Résolution de problèmes</li>
-                            <li data-fr="Communication" data-en="Communication">Communication</li>
-                        </ul>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td data-fr="Projet Personnel : IntelliOS - Système d’Exploitation Personnalisé" data-en="Personal Project: IntelliOS - Custom Operating System">Projet Personnel : IntelliOS - Système d’Exploitation Personnalisé</td>
-                <td>2024</td>
-                <td>
-                    <button class="toggle-btn" data-target="realisations-7" data-fr="Voir le projet" data-en="View Project">Voir le projet</button>
-                </td>
-            </tr>
-            <tr id="realisations-7" class="sub-section-row">
-                <td colspan="3">
-                    <div class="sub-section">
-                        <img src="intellios.png" alt="Visuel IntelliOS" class="project-image">
-                        <p><strong data-fr="Résumé du projet :" data-en="Project Summary:">Résumé du projet :</strong>
-                            <span data-fr="Développement d’IntelliOS, un système d’exploitation basé sur Ubuntu, personnalisé avec des applications intégrées (outils de développement, utilitaires multimédias) pour optimiser la productivité et l’expérience utilisateur."
-                                  data-en="Development of IntelliOS, an Ubuntu-based operating system customized with integrated applications (development tools, multimedia utilities) to optimize productivity and user experience.">Développement d’IntelliOS, un système d’exploitation basé sur Ubuntu, personnalisé avec des applications intégrées (outils de développement, utilitaires multimédias) pour optimiser la productivité et l’expérience utilisateur.</span></p>
-                        <p><strong data-fr="Compétences techniques acquises :" data-en="Technical Skills Acquired:">Compétences techniques acquises :</strong></p>
-                        <ul>
-                            <li data-fr="Administration système Linux" data-en="Linux system administration">Administration système Linux</li>
-                            <li data-fr="Personnalisation de distributions" data-en="Distribution customization">Personnalisation de distributions</li>
-                            <li data-fr="Packaging de logiciels" data-en="Software packaging">Packaging de logiciels</li>
-                            <li data-fr="Scripting shell" data-en="Shell scripting">Scripting shell</li>
-                            <li data-fr="Gestion de dépendances" data-en="Dependency management">Gestion de dépendances</li>
-                        </ul>
-                        <p><strong data-fr="Savoir-être acquis :" data-en="Soft Skills Acquired:">Savoir-être acquis :</strong></p>
-                        <ul>
-                            <li data-fr="Autonomie" data-en="Autonomy">Autonomie</li>
-                            <li data-fr="Initiative" data-en="Initiative">Initiative</li>
-                            <li data-fr="Gestion de projet personnel" data-en="Personal project management">Gestion de projet personnel</li>
-                            <li data-fr="Résolution de problèmes" data-en="Problem-solving">Résolution de problèmes</li>
-                            <li data-fr="Apprentissage continu" data-en="Continuous learning">Apprentissage continu</li>
-                        </ul>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</section>
 
-<section id="loisirs" class="section">
-    <div class="card animate">
-        <div class="image-container">
-            <img src="loisirs.jpg" alt="Loisirs" class="section-image">
+        <div class="portfolio-item">
+            <img src="airtarnils.png" alt="AIrTarNils" onerror="this.src='https://via.placeholder.com/400x250/0a0a0f/00e676?text=AIrTarNils'">
+            <div class="portfolio-overlay">
+                <h3 class="t-proj-3-title">AIrTarNils Mobile</h3>
+                <button class="btn-view t-btn-view" onclick="openModal('modal-3')">Voir détails</button>
+            </div>
         </div>
-        <h2 data-fr="Loisirs" data-en="Hobbies">Loisirs</h2>
-        <table class="loisirs-table">
-            <thead>
-            <tr>
-                <th data-fr="Activité" data-en="Activity">Activité</th>
-                <th data-fr="Informations" data-en="Information">Informations</th>
-                <th data-fr="Actions" data-en="Actions">Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td data-fr="Football : US Lesquin" data-en="Football: US Lesquin">Football : US Lesquin</td>
-                <td data-fr="Passionné de football depuis l’enfance." data-en="Passionate about football since childhood.">Passionné de football depuis l’enfance.</td>
-                <td>
-                    <button class="toggle-btn" data-target="loisirs-1" data-fr="Voir les détails" data-en="View Details">Voir les détails</button>
-                </td>
-            </tr>
-            <tr id="loisirs-1" class="sub-section-row">
-                <td colspan="3">
-                    <div class="sub-section">
-                        <p><strong data-fr="Détails :" data-en="Details:">Détails :</strong></p>
-                        <ul>
-                            <li data-fr="8 saisons dans des équipes de football" data-en="8 seasons in football teams">8 saisons dans des équipes de football</li>
-                            <li data-fr="Membre de l’US Lesquin depuis juillet 2024" data-en="Member of US Lesquin since July 2024">Membre de l’US Lesquin depuis juillet 2024</li>
-                            <li data-fr="Développement de compétences en leadership et cohésion d’équipe" data-en="Development of leadership and team cohesion skills">Développement de compétences en leadership et cohésion d’équipe</li>
-                        </ul>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td data-fr="Jeux vidéo" data-en="Video Games">Jeux vidéo</td>
-                <td data-fr="Passion pour les jeux de stratégie et d’aventure." data-en="Passion for strategy and adventure games.">Passion pour les jeux de stratégie et d’aventure.</td>
-                <td>
-                    <button class="toggle-btn" data-target="loisirs-2" data-fr="Voir les détails" data-en="View Details">Voir les détails</button>
-                </td>
-            </tr>
-            <tr id="loisirs-2" class="sub-section-row">
-                <td colspan="3">
-                    <div class="sub-section">
-                        <p><strong data-fr="Détails :" data-en="Details:">Détails :</strong></p>
-                        <ul>
-                            <li data-fr="Collection de jeux vidéo et de consoles" data-en="Collection of video games and consoles">Collection de jeux vidéo et de consoles</li>
-                            <li data-fr="Intérêt pour la stratégie et l’immersion" data-en="Interest in strategy and immersion">Intérêt pour la stratégie et l’immersion</li>
-                        </ul>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td data-fr="Informatique, Multimédia et Automobile" data-en="IT, Multimedia, and Automotive">Informatique, Multimédia et Automobile</td>
-                <td data-fr="Intérêt pour le développement, le multimédia et l’automobile." data-en="Interest in development, multimedia, and automotive.">Intérêt pour le développement, le multimédia et l’automobile.</td>
-                <td>
-                    <button class="toggle-btn" data-target="loisirs-3" data-fr="Voir les détails" data-en="View Details">Voir les détails</button>
-                </td>
-            </tr>
-            <tr id="loisirs-3" class="sub-section-row">
-                <td colspan="3">
-                    <div class="sub-section">
-                        <p><strong data-fr="Détails :" data-en="Details:">Détails :</strong></p>
-                        <ul>
-                            <li data-fr="Projets personnels en développement web et logiciels" data-en="Personal projects in web and software development">Projets personnels en développement web et logiciels</li>
-                            <li data-fr="Création de contenus multimédias (vidéos, animations)" data-en="Creation of multimedia content (videos, animations)">Création de contenus multimédias (vidéos, animations)</li>
-                            <li data-fr="Passion pour l’histoire et la mécanique automobile" data-en="Passion for automotive history and mechanics">Passion pour l’histoire et la mécanique automobile</li>
-                        </ul>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+
+        <div class="portfolio-item">
+            <img src="intelliclassify.png" alt="IntelliClassify" onerror="this.src='https://via.placeholder.com/400x250/0a0a0f/00e676?text=IntelliClassify'">
+            <div class="portfolio-overlay">
+                <h3 class="t-proj-4-title">Application IntelliClassify</h3>
+                <button class="btn-view t-btn-view" onclick="openModal('modal-4')">Voir détails</button>
+            </div>
+        </div>
+
+        <div class="portfolio-item">
+            <img src="zmap.png" alt="Gestion de Trajets" onerror="this.src='https://via.placeholder.com/400x250/0a0a0f/00e676?text=Trajets'">
+            <div class="portfolio-overlay">
+                <h3 class="t-proj-5-title">Application JavaFX Gestion de Trajets</h3>
+                <button class="btn-view t-btn-view" onclick="openModal('modal-5')">Voir détails</button>
+            </div>
+        </div>
+
+        <div class="portfolio-item">
+            <img src="qvgdm.png" alt="Qui veut gagner des Millions" onerror="this.src='https://via.placeholder.com/400x250/0a0a0f/00e676?text=QVGDM'">
+            <div class="portfolio-overlay">
+                <h3 class="t-proj-6-title">Jeu "Qui veut gagner des Millions"</h3>
+                <button class="btn-view t-btn-view" onclick="openModal('modal-6')">Voir détails</button>
+            </div>
+        </div>
+
+        <div class="portfolio-item">
+            <img src="matrix.png" alt="Matrix Communication" onerror="this.src='https://via.placeholder.com/400x250/0a0a0f/00e676?text=Matrix'">
+            <div class="portfolio-overlay">
+                <h3 class="t-proj-7-title">Solution de Communication Matrix</h3>
+                <button class="btn-view t-btn-view" onclick="openModal('modal-7')">Voir détails</button>
+            </div>
+        </div>
+
+        <div class="portfolio-item">
+            <img src="intellisocial.png" alt="IntelliSocial" onerror="this.src='https://via.placeholder.com/400x250/0a0a0f/00e676?text=IntelliSocial'">
+            <div class="portfolio-overlay">
+                <h3 class="t-proj-8-title">IntelliSocial - Réseau Social Étudiant</h3>
+                <button class="btn-view t-btn-view" onclick="openModal('modal-8')">Voir détails</button>
+            </div>
+        </div>
+
+        <div class="portfolio-item">
+            <img src="HAGARIO.png" alt="Jeu Agar.io-like" onerror="this.src='https://via.placeholder.com/400x250/0a0a0f/00e676?text=Agar.io'">
+            <div class="portfolio-overlay">
+                <h3 class="t-proj-9-title">Jeu Multi-joueur en Ligne (Agar.io-like)</h3>
+                <button class="btn-view t-btn-view" onclick="openModal('modal-9')">Voir détails</button>
+            </div>
+        </div>
+
+        <div class="portfolio-item">
+            <img src="intellios.png" alt="IntelliOS" onerror="this.src='https://via.placeholder.com/400x250/0a0a0f/00e676?text=IntelliOS'">
+            <div class="portfolio-overlay">
+                <h3 class="t-proj-10-title">IntelliOS - Système d'Exploitation</h3>
+                <button class="btn-view t-btn-view" onclick="openModal('modal-10')">Voir détails</button>
+            </div>
+        </div>
     </div>
 </section>
 
-<section id="contact" class="section">
-    <div class="card animate">
-        <h2 data-fr="Contact" data-en="Contact">Contact</h2>
-        <p><strong data-fr="Adresse :" data-en="Address:">Adresse :</strong>
-            <span data-fr="5 Rue Arnaud Beltrame Appartement A02, 59150 Wattrelos" data-en="5 Arnaud Beltrame Street, Apartment A02, 59150 Wattrelos">5 Rue Arnaud Beltrame Appartement A02, 59150 Wattrelos</span></p>
-        <p><strong>Email :</strong> <a href="mailto:wagungfr@icloud.com">wagungfr@icloud.com</a></p>
-        <p><strong data-fr="Téléphone :" data-en="Phone:">Téléphone :</strong> +33 7 57 58 68 23</p>
-        <p><strong>LinkedIn :</strong> <a href="https://www.linkedin.com/in/nils-akinmoladun-a6127b276/" class="link" data-fr="Profil LinkedIn" data-en="LinkedIn Profile">Profil LinkedIn</a></p>
+
+<section id="contact" class="section reveal">
+    <h2 class="section-title t-title-contact">Me Contacter</h2>
+    <div class="contact-info">
+        <p>Email: <a href="mailto:wagungfr@icloud.com">wagungfr@icloud.com</a></p>
+        <p>Tel: +33 7 57 58 68 23</p>
+        <p>LinkedIn: <a href="https://www.linkedin.com/in/nils-akinmoladun-a6127b276/" target="_blank" class="t-linkedin-link">Profil LinkedIn</a></p>
+        <p><br><a href="Naki Cv 2026.pdf" class="btn-view t-btn-download" download>Télécharger le CV PDF</a></p>
     </div>
 </section>
 
-<footer class="footer">
-    <p data-fr="© 2025 Nils Vanderschooten-Akinmoladun - Créé avec IntelliCV" data-en="© 2025 Nils Vanderschooten-Akinmoladun - Created with IntelliCV">© 2025 Nils Vanderschooten-Akinmoladun - Créé avec IntelliCV</p>
-    <a href="Naki Cv 2025 2.pdf" download class="download-btn" data-fr="Télécharger le CV en PDF" data-en="Download Resume in PDF">Télécharger le CV en PDF</a>
-    <div class="lang-switcher">
-        <button id="lang-fr" class="lang-btn active" data-lang="fr">FR</button>
-        <button id="lang-en" class="lang-btn" data-lang="en">EN</button>
-    </div>
+<footer>
+    <p class="t-footer-text">© 2026 Nils Vanderschooten-Akinmoladun - Créé avec IntelliCV</p>
 </footer>
 
-<script>
-    // Défilement fluide avec offset
-    document.querySelectorAll('.navbar a').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href').substring(1);
-            const targetSection = document.getElementById(targetId);
-            const navbarHeight = document.querySelector('.navbar').offsetHeight;
-            window.scrollTo({
-                top: targetSection.offsetTop - navbarHeight,
-                behavior: 'smooth'
-            });
-        });
-    });
+<div class="modal-overlay" id="modal-1" onclick="closeModal(event)">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeModalForce('modal-1')">&times;</button>
+        <h2 style="color:var(--accent); margin-bottom: 10px;" class="t-proj-1-title">IntelliCV - Portfolio Numérique</h2>
+        <div class="modal-body">
+            <p class="t-proj-1-desc">Création d'IntelliCV, une plateforme web de portfolio numérique permettant de présenter son parcours, ses compétences et ses réalisations sous forme de CV interactif en ligne. Le site intègre un design responsive, un système multilingue (FR/EN/ES/DE), des animations modernes et un thème sombre avec accentuation verte.</p>
+            <p style="margin-top:15px;"><strong>Compétences techniques :</strong></p>
+            <ul>
+                <li>Développement frontend (HTML5, CSS3, JavaScript)</li>
+                <li>Design responsive et mobile-first</li>
+                <li>Animations CSS et interactions JavaScript</li>
+                <li>Internationalisation (système multilingue)</li>
+                <li>UI/UX Design (thème sombre, accessibilité)</li>
+            </ul>
+            <p style="margin-top:15px;"><strong>Savoir-être :</strong></p>
+            <ul>
+                <li>Autonomie</li>
+                <li>Créativité et sens du design</li>
+                <li>Gestion de projet personnel</li>
+                <li>Souci du détail</li>
+            </ul>
+        </div>
+    </div>
+</div>
 
-    // Affichage extensible des sous-sections
-    document.querySelectorAll('.toggle-btn').forEach(button => {
-        button.addEventListener('click', () => {
-            const targetId = button.getAttribute('data-target');
-            const subSectionRow = document.getElementById(targetId);
-            const lang = document.documentElement.lang;
-            if (subSectionRow.classList.contains('show')) {
-                subSectionRow.classList.remove('show');
-                button.textContent = lang === 'fr' ? button.getAttribute('data-fr') : button.getAttribute('data-en');
-            } else {
-                subSectionRow.classList.add('show');
-                button.textContent = lang === 'fr' ? 'Cacher' : 'Hide';
+<div class="modal-overlay" id="modal-2" onclick="closeModal(event)">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeModalForce('modal-2')">&times;</button>
+        <h2 style="color:var(--accent); margin-bottom: 10px;" class="t-proj-2-title">Réservation Piscine</h2>
+        <div class="modal-body">
+            <p class="t-proj-2-desc">Conception et développement en équipe d'une plateforme web inspirée de Doctolib, dédiée à la gestion et la réservation de créneaux pour une piscine municipale. L'application permet aux usagers de consulter les disponibilités, réserver des créneaux horaires, et gérer leur compte. Le back-office offre aux administrateurs la gestion des bassins, des créneaux et des réservations.</p>
+            <p style="margin-top:15px;"><strong>Compétences techniques :</strong></p>
+            <ul>
+                <li>Backend : Spring Boot, Spring MVC, Spring Security</li>
+                <li>Gestion de projet : Maven</li>
+                <li>Base de données : SQL, PostgreSQL</li>
+                <li>Frontend : HTML5, CSS3, Thymeleaf</li>
+                <li>Versionning : Git</li>
+                <li>Tests unitaires et d'intégration</li>
+            </ul>
+            <p style="margin-top:15px;"><strong>Savoir-être :</strong></p>
+            <ul>
+                <li>Travail en équipe</li>
+                <li>Méthodologie agile (Scrum)</li>
+                <li>Communication technique</li>
+                <li>Respect des délais</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="modal-3" onclick="closeModal(event)">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeModalForce('modal-3')">&times;</button>
+        <h2 style="color:var(--accent); margin-bottom: 10px;" class="t-proj-3-title">AIrTarNils Mobile</h2>
+        <div class="modal-body">
+            <p class="t-proj-3-desc">Conception complète d'une solution de gestion pour employés d'aéroport (Projet Stage Wildau). Le système comprend une application Android native (Kotlin/Java) offrant la gestion de tâches et la géolocalisation temps réel (Google Maps, Room, Firebase), connectée à une API REST sécurisée développée en Spring Boot (Java 17, PostgreSQL) remplaçant une architecture JDBC obsolète.</p>
+            <p style="margin-top:15px;"><strong>Compétences techniques :</strong></p>
+            <ul>
+                <li>Dév. Mobile : Kotlin, Java, Room, WorkManager, Google Maps SDK</li>
+                <li>Backend : Spring Boot, API REST, Java 17, Hibernate, PostgreSQL</li>
+                <li>Services : Firebase Cloud Messaging, Géocodage</li>
+                <li>Outils : Docker, Git, Retrofit</li>
+            </ul>
+            <p style="margin-top:15px;"><strong>Savoir-être :</strong></p>
+            <ul>
+                <li>Architecture logicielle (Mobile + API)</li>
+                <li>Résolution de dette technique</li>
+                <li>Travail en environnement international</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="modal-4" onclick="closeModal(event)">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeModalForce('modal-4')">&times;</button>
+        <h2 style="color:var(--accent); margin-bottom: 10px;" class="t-proj-4-title">Application IntelliClassify</h2>
+        <div class="modal-body">
+            <p class="t-proj-4-desc">Développement d'un outil de chargement et d'affichage de données CSV, avec classification supervisée via l'algorithme KNN. L'application permet de visualiser des nuages de points, de sélectionner des attributs, de choisir une catégorie et de classer de nouvelles données avec des distances (euclidienne, Manhattan) et des pondérations ajustables. Réalisé en groupe de quatre.</p>
+            <p style="margin-top:15px;"><strong>Compétences techniques :</strong></p>
+            <ul>
+                <li>Programmation en Java et JavaFX</li>
+                <li>Manipulation de fichiers CSV</li>
+                <li>Implémentation de l'algorithme KNN</li>
+                <li>Gestion de données multidimensionnelles</li>
+                <li>Évaluation de modèles de classification</li>
+            </ul>
+            <p style="margin-top:15px;"><strong>Savoir-être :</strong></p>
+            <ul>
+                <li>Travail en équipe</li>
+                <li>Gestion de projet</li>
+                <li>Communication technique</li>
+                <li>Résolution de problèmes</li>
+                <li>Adaptabilité</li>
+            </ul>
+            <p style="margin-top:15px;"><a href="https://gitlab.univ-lille.fr/sae302/2024/I4_SAE3.3" style="color:var(--accent);">Lien vers le Gitlab</a></p>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="modal-5" onclick="closeModal(event)">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeModalForce('modal-5')">&times;</button>
+        <h2 style="color:var(--accent); margin-bottom: 10px;" class="t-proj-5-title">Application JavaFX Gestion de Trajets</h2>
+        <div class="modal-body">
+            <p class="t-proj-5-desc">Développement d'une application JavaFX pour optimiser des trajets en temps réel à l'aide de graphes. Elle offre une interface intuitive pour visualiser et gérer les itinéraires, réalisée en équipe de trois.</p>
+            <p style="margin-top:15px;"><strong>Compétences techniques :</strong></p>
+            <ul>
+                <li>Programmation en JavaFX</li>
+                <li>Utilisation de graphes pour l'optimisation</li>
+                <li>Conception d'interfaces utilisateur</li>
+            </ul>
+            <p style="margin-top:15px;"><strong>Savoir-être :</strong></p>
+            <ul>
+                <li>Travail en équipe</li>
+                <li>Gestion de projet</li>
+                <li>Communication</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="modal-6" onclick="closeModal(event)">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeModalForce('modal-6')">&times;</button>
+        <h2 style="color:var(--accent); margin-bottom: 10px;" class="t-proj-6-title">Jeu "Qui veut gagner des Millions"</h2>
+        <div class="modal-body">
+            <p class="t-proj-6-desc">Création d'un jeu en Python inspiré de "Qui veut gagner des Millions", avec un contrôleur complet, une gestion des scores et des paliers. Projet personnel visant à simuler une expérience télévisée interactive.</p>
+            <p style="margin-top:15px;"><strong>Compétences techniques :</strong></p>
+            <ul>
+                <li>Programmation en Python</li>
+                <li>Gestion des entrées/sorties</li>
+                <li>Conception de logique de jeu</li>
+            </ul>
+            <p style="margin-top:15px;"><strong>Savoir-être :</strong></p>
+            <ul>
+                <li>Autonomie</li>
+                <li>Créativité</li>
+                <li>Planification</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="modal-7" onclick="closeModal(event)">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeModalForce('modal-7')">&times;</button>
+        <h2 style="color:var(--accent); margin-bottom: 10px;" class="t-proj-7-title">Solution de Communication Matrix</h2>
+        <div class="modal-body">
+            <p class="t-proj-7-desc">Mise en place d'un service de communication basé sur Matrix, offrant des échanges synchrones et asynchrones sécurisés (chiffrement de bout en bout). Accessible via web, desktop ou mobile, il supporte les discussions individuelles et de groupe avec Synapse et Element.</p>
+            <p style="margin-top:15px;"><strong>Compétences techniques :</strong></p>
+            <ul>
+                <li>Configuration de serveurs Matrix (Synapse)</li>
+                <li>Intégration de clients (Element)</li>
+                <li>Gestion de la sécurité et du chiffrement</li>
+                <li>Administration système</li>
+            </ul>
+            <p style="margin-top:15px;"><strong>Savoir-être :</strong></p>
+            <ul>
+                <li>Travail en équipe</li>
+                <li>Gestion de projet</li>
+                <li>Résolution de problèmes</li>
+                <li>Adaptabilité</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="modal-8" onclick="closeModal(event)">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeModalForce('modal-8')">&times;</button>
+        <h2 style="color:var(--accent); margin-bottom: 10px;" class="t-proj-8-title">IntelliSocial - Réseau Social Étudiant</h2>
+        <div class="modal-body">
+            <p class="t-proj-8-desc">Développement d'une application web de réseau social, IntelliSocial, permettant de créer des fils de discussion, poster des messages et lire les contributions. Basée sur une architecture MVC avec une base de données relationnelle pour gérer les interactions.</p>
+            <p style="margin-top:15px;"><strong>Compétences techniques :</strong></p>
+            <ul>
+                <li>Programmation backend (Java, JSP)</li>
+                <li>Architecture MVC</li>
+                <li>Gestion de bases de données (SQL)</li>
+                <li>Authentification et autorisation</li>
+                <li>Tests unitaires</li>
+            </ul>
+            <p style="margin-top:15px;"><strong>Savoir-être :</strong></p>
+            <ul>
+                <li>Travail en équipe</li>
+                <li>Gestion de projet agile</li>
+                <li>Communication technique</li>
+                <li>Résolution de bugs</li>
+                <li>Respect des délais</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="modal-9" onclick="closeModal(event)">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeModalForce('modal-9')">&times;</button>
+        <h2 style="color:var(--accent); margin-bottom: 10px;" class="t-proj-9-title">Jeu Multi-joueur en Ligne (Agar.io-like)</h2>
+        <div class="modal-body">
+            <p class="t-proj-9-desc">Création d'un jeu en ligne multi-joueur inspiré d'Agar.io, où des entités grandissent en absorbant d'autres dans un environnement en temps réel. Développé avec des technologies web (frontend) et un serveur (backend) pour gérer les interactions.</p>
+            <p style="margin-top:15px;"><strong>Compétences techniques :</strong></p>
+            <ul>
+                <li>Programmation frontend (HTML5, CSS, JavaScript)</li>
+                <li>Programmation backend (Node.js, WebSockets)</li>
+                <li>Gestion de la concurrence</li>
+                <li>Optimisation des performances</li>
+                <li>Design de jeux</li>
+            </ul>
+            <p style="margin-top:15px;"><strong>Savoir-être :</strong></p>
+            <ul>
+                <li>Travail en équipe</li>
+                <li>Gestion de projet</li>
+                <li>Créativité</li>
+                <li>Résolution de problèmes</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="modal-10" onclick="closeModal(event)">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeModalForce('modal-10')">&times;</button>
+        <h2 style="color:var(--accent); margin-bottom: 10px;" class="t-proj-10-title">IntelliOS - Système d'Exploitation</h2>
+        <div class="modal-body">
+            <p class="t-proj-10-desc">Développement d'IntelliOS, un système d'exploitation basé sur Ubuntu, personnalisé avec des applications intégrées (outils de développement, utilitaires multimédias) pour optimiser la productivité et l'expérience utilisateur.</p>
+            <p style="margin-top:15px;"><strong>Compétences techniques :</strong></p>
+            <ul>
+                <li>Administration système Linux</li>
+                <li>Personnalisation de distributions</li>
+                <li>Packaging de logiciels</li>
+                <li>Scripting shell</li>
+                <li>Gestion de dépendances</li>
+            </ul>
+            <p style="margin-top:15px;"><strong>Savoir-être :</strong></p>
+            <ul>
+                <li>Autonomie</li>
+                <li>Initiative</li>
+                <li>Gestion de projet personnel</li>
+                <li>Résolution de problèmes</li>
+                <li>Apprentissage continu</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ===== HAMBURGER MENU =====
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+    const navOverlay = document.getElementById('navOverlay');
+
+    function toggleMenu() {
+        hamburger.classList.toggle('active');
+        navLinks.classList.toggle('nav-open');
+        navOverlay.classList.toggle('active');
+        document.body.style.overflow = navLinks.classList.contains('nav-open') ? 'hidden' : '';
+    }
+
+    function closeMenu() {
+        hamburger.classList.remove('active');
+        navLinks.classList.remove('nav-open');
+        navOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    hamburger.addEventListener('click', toggleMenu);
+    navOverlay.addEventListener('click', closeMenu);
+
+    // Close menu when clicking a nav link
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', (e) => {
+            closeMenu();
+            // Smooth scroll with offset
+            e.preventDefault();
+            const targetId = link.getAttribute('href').substring(1);
+            const targetSection = document.getElementById(targetId);
+            if (targetSection) {
+                const navbarHeight = document.querySelector('.navbar').offsetHeight;
+                window.scrollTo({
+                    top: targetSection.offsetTop - navbarHeight,
+                    behavior: 'smooth'
+                });
             }
         });
     });
 
-    // Gestion de la langue
-    const langButtons = document.querySelectorAll('.lang-btn');
-    langButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const lang = button.getAttribute('data-lang');
-            document.documentElement.lang = lang;
+    // ===== ANIMATIONS AU SCROLL =====
+    function reveal() {
+        var reveals = document.querySelectorAll(".reveal");
+        for (var i = 0; i < reveals.length; i++) {
+            var windowHeight = window.innerHeight;
+            var elementTop = reveals[i].getBoundingClientRect().top;
+            var elementVisible = 100;
+            if (elementTop < windowHeight - elementVisible) {
+                reveals[i].classList.add("active");
+            }
+        }
+    }
+    window.addEventListener("scroll", reveal);
+    reveal();
 
-            // Mettre à jour les textes
-            document.querySelectorAll('[data-fr][data-en]').forEach(element => {
-                element.textContent = lang === 'fr' ? element.getAttribute('data-fr') : element.getAttribute('data-en');
-            });
+    // ===== ONGLETS ABOUT =====
+    function switchTab(tabId) {
+        document.querySelectorAll('.about-panel').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.about-tab').forEach(t => t.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        document.querySelector('[data-tab="' + tabId + '"]').classList.add('active');
+    }
 
-            // Mettre à jour les boutons toggle
-            document.querySelectorAll('.toggle-btn').forEach(btn => {
-                const targetId = btn.getAttribute('data-target');
-                const subSectionRow = document.getElementById(targetId);
-                if (!subSectionRow.classList.contains('show')) {
-                    btn.textContent = lang === 'fr' ? btn.getAttribute('data-fr') : btn.getAttribute('data-en');
+    // ===== GESTION DES MODALS PORTFOLIO =====
+    function openModal(id) {
+        document.getElementById(id).classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeModalForce(id) {
+        document.getElementById(id).classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+    function closeModal(event) {
+        if (event.target.classList.contains('modal-overlay')) {
+            event.target.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+    }
+
+    // ===== DICTIONNAIRE MULTILINGUE (FR, EN, ES, DE) =====
+    const dictionary = {
+        fr: {
+            typewriter: "Bonjour, je suis Nils",
+            "t-role": "Étudiant & Développeur Full-Stack",
+            "t-desc": "Étudiant en 3ème année de BUT Informatique. Passionné par le développement et les technologies, je crée des applications robustes et des interfaces modernes.",
+            "t-btn-discover": "Découvrir mes projets",
+            "t-nav-home": "Accueil", "t-nav-about": "À propos", "t-nav-skills": "Compétences", "t-nav-portfolio": "Portfolio", "t-nav-contact": "Contact",
+            "t-title-about": "À propos de moi", "t-title-skills": "Compétences", "t-title-portfolio": "Réalisations", "t-title-contact": "Me Contacter",
+            "t-tab-intro": "Présentation", "t-tab-parcours": "Parcours & Formations", "t-tab-exp": "Expériences Pro.", "t-tab-loisirs": "Loisirs",
+            "t-about-intro": "Je m'appelle Nils Vanderschooten-Akinmoladun, j'ai 20 ans et je suis étudiant en troisième année de BUT Informatique à l'Université de Lille.",
+            "t-about-intro-2": "Passionné par le développement et les technologies, je suis constamment à la recherche de nouveaux défis pour créer des applications robustes et des interfaces modernes.",
+            "t-sub-parcours": "Parcours & Formations", "t-sub-exp": "Expériences Professionnelles", "t-sub-loisirs": "Loisirs",
+            "t-linkedin-link": "Profil LinkedIn",
+            "t-edu-1-title": "BUT Informatique - 3ème Année", "t-edu-1-desc": "Université de Lille, Villeneuve d'Ascq. Diplômé en DUT Informatique.",
+            "t-exp-1-title": "Stage Erasmus à Wildau", "t-exp-1-desc": "Développement d'une application mobile (Aéroport Berlin) et API REST. Réalisé en binôme à l'Institut Universitaire de Technologie de Wildau.",
+            "t-exp-1-detail": "Réalisation de projets dans le domaine des infrastructures et des télécommunications. Développement d'une application mobile (Aéroport Berlin) en binôme à l'Institut Universitaire de Technologie de Wildau.",
+            "t-edu-cambridge-title": "Cambridge Certificate", "t-edu-cambridge-desc": "Certification d'anglais obtenue en 2023.",
+            "t-edu-2-title": "Baccalauréat Général", "t-edu-2-desc": "Lycée EIC Tourcoing.",
+            "t-exp-helpdesk-title": "Stage HelpDesk - Camaïeu", "t-exp-helpdesk-desc": "Assistance aux utilisateurs et résolution de problèmes techniques. Support client et gestion des incidents.", "t-exp-helpdesk-date": "Avril 2022 (1 semaine)",
+            "t-exp-micromania-title": "Mini-job en vente - Micromania Leers", "t-exp-micromania-desc": "Vente, conseil client et gestion des stocks.",
+            "t-exp-emaho-title": "Stage de 3ème - Emaho Roubaix", "t-exp-emaho-desc": "Conception sonore et numérique. Création de contenu numérique et techniques de conception sonore.",
+            "t-skill-lang": "Anglais (C1) / Allemand (B2)",
+            "t-skill-docker": "Docker / Machines virtuelles", "t-skill-linux": "Admin Système Linux", "t-skill-hardware": "Assistance info (montage/démontage PC)",
+            "t-skill-soft": "Travail d'équipe / Adaptabilité", "t-skill-problem": "Résolution de problèmes / Autonomie", "t-skill-permit": "Permis B",
+            "t-proj-1-title": "IntelliCV - Portfolio Numérique", "t-proj-1-desc": "Création d'IntelliCV, une plateforme web de portfolio numérique permettant de présenter son parcours, ses compétences et ses réalisations sous forme de CV interactif en ligne.",
+            "t-proj-2-title": "Réservation Piscine", "t-proj-2-snippet": "Plateforme style Doctolib (Spring Boot)", "t-proj-2-desc": "Conception et développement en équipe d'une plateforme web inspirée de Doctolib, dédiée à la gestion et la réservation de créneaux pour une piscine municipale.",
+            "t-proj-3-title": "AIrTarNils Mobile", "t-proj-3-snippet": "App Android & API REST (Wildau)", "t-proj-3-desc": "Conception complète d'une solution de gestion pour employés d'aéroport. Application Android native (Kotlin/Java) connectée à une API REST sécurisée (Java 17, PostgreSQL).",
+            "t-proj-4-title": "Application IntelliClassify", "t-proj-4-desc": "Développement d'un outil de chargement et d'affichage de données CSV, avec classification supervisée via l'algorithme KNN. Réalisé en groupe de quatre.",
+            "t-proj-5-title": "Application JavaFX Gestion de Trajets", "t-proj-5-snippet": "Optimisation de trajets par graphes (JavaFX)", "t-proj-5-desc": "Développement d'une application JavaFX pour optimiser des trajets en temps réel à l'aide de graphes. Réalisée en équipe de trois.",
+            "t-proj-6-title": "Jeu \"Qui veut gagner des Millions\"", "t-proj-6-snippet": "Jeu interactif en Python", "t-proj-6-desc": "Création d'un jeu en Python inspiré de \"Qui veut gagner des Millions\", avec un contrôleur complet, une gestion des scores et des paliers.",
+            "t-proj-7-title": "Solution de Communication Matrix", "t-proj-7-snippet": "Synapse & Element (chiffrement E2E)", "t-proj-7-desc": "Mise en place d'un service de communication basé sur Matrix, offrant des échanges synchrones et asynchrones sécurisés (chiffrement de bout en bout).",
+            "t-proj-8-title": "IntelliSocial - Réseau Social Étudiant", "t-proj-8-desc": "Développement d'une application web de réseau social, IntelliSocial, permettant de créer des fils de discussion, poster des messages et lire les contributions.",
+            "t-proj-9-title": "Jeu Multi-joueur en Ligne (Agar.io-like)", "t-proj-9-desc": "Création d'un jeu en ligne multi-joueur inspiré d'Agar.io, où des entités grandissent en absorbant d'autres dans un environnement en temps réel.",
+            "t-proj-10-title": "IntelliOS - Système d'Exploitation", "t-proj-10-desc": "Développement d'IntelliOS, un système d'exploitation basé sur Ubuntu, personnalisé avec des applications intégrées pour optimiser la productivité.",
+            "t-btn-view": "Voir détails", "t-btn-download": "Télécharger le CV PDF",
+            "t-footer-text": "© 2026 Nils Vanderschooten-Akinmoladun - Créé avec IntelliCV",
+            "t-hobby-football": "Football : US Lesquin", "t-hobby-football-desc": "8 saisons, membre depuis juillet 2024. Leadership et cohésion d'équipe.",
+            "t-hobby-games": "Jeux vidéo", "t-hobby-games-desc": "Passion pour les jeux de stratégie et d'aventure. Collection de jeux et consoles.",
+            "t-hobby-it": "Informatique & Multimédia", "t-hobby-it-desc": "Projets personnels en développement web et logiciels. Création de contenus multimédias.",
+            "t-hobby-auto": "Automobile", "t-hobby-auto-desc": "Passion pour l'histoire et la mécanique automobile."
+        },
+        en: {
+            typewriter: "Hello, I am Nils",
+            "t-role": "Student & Full-Stack Developer",
+            "t-desc": "3rd-year Computer Science student. Passionate about development and technology, I build robust apps and modern interfaces.",
+            "t-btn-discover": "Discover my projects",
+            "t-nav-home": "Home", "t-nav-about": "About", "t-nav-skills": "Skills", "t-nav-portfolio": "Portfolio", "t-nav-contact": "Contact",
+            "t-title-about": "About Me", "t-title-skills": "Skills", "t-title-portfolio": "Projects", "t-title-contact": "Contact Me",
+            "t-tab-intro": "Introduction", "t-tab-parcours": "Education & Background", "t-tab-exp": "Professional Exp.", "t-tab-loisirs": "Hobbies",
+            "t-about-intro": "My name is Nils Vanderschooten-Akinmoladun, I'm 20 years old, and I'm a third-year Computer Science (BUT) student at the University of Lille.",
+            "t-about-intro-2": "Passionate about development and technology, I'm constantly looking for new challenges to build robust applications and modern interfaces.",
+            "t-sub-parcours": "Education & Background", "t-sub-exp": "Professional Experience", "t-sub-loisirs": "Hobbies",
+            "t-linkedin-link": "LinkedIn Profile",
+            "t-edu-1-title": "Bachelor in Computer Science - 3rd Year", "t-edu-1-desc": "University of Lille. Graduated with a technical degree in IT.",
+            "t-exp-1-title": "Erasmus Internship in Wildau", "t-exp-1-desc": "Mobile app development (Berlin Airport) and REST API. Pair programming at TH Wildau.",
+            "t-exp-1-detail": "Carrying out projects in the field of infrastructure and telecommunications. Mobile app development (Berlin Airport) in pair at TH Wildau.",
+            "t-edu-cambridge-title": "Cambridge Certificate", "t-edu-cambridge-desc": "English certification obtained in 2023.",
+            "t-edu-2-title": "High School Diploma", "t-edu-2-desc": "EIC Tourcoing High School.",
+            "t-exp-helpdesk-title": "HelpDesk Internship - Camaïeu", "t-exp-helpdesk-desc": "User assistance and technical problem-solving. Customer support and incident management.", "t-exp-helpdesk-date": "April 2022 (1 week)",
+            "t-exp-micromania-title": "Sales Mini-Job - Micromania Leers", "t-exp-micromania-desc": "Sales, customer advice, and stock management.",
+            "t-exp-emaho-title": "9th Grade Internship - Emaho Roubaix", "t-exp-emaho-desc": "Sound and digital design. Digital content creation and sound design techniques.",
+            "t-skill-lang": "English (C1) / German (B2)",
+            "t-skill-docker": "Docker / Virtual Machines", "t-skill-linux": "Linux System Admin", "t-skill-hardware": "IT support (PC assembly/disassembly)",
+            "t-skill-soft": "Teamwork / Adaptability", "t-skill-problem": "Problem-solving / Autonomy", "t-skill-permit": "Driver's License B",
+            "t-proj-1-title": "IntelliCV - Digital Portfolio", "t-proj-1-desc": "Creation of IntelliCV, a digital portfolio web platform for showcasing one's background, skills, and projects as an interactive online resume.",
+            "t-proj-2-title": "Pool Booking App", "t-proj-2-snippet": "Doctolib-style platform (Spring Boot)", "t-proj-2-desc": "Team design and development of a Doctolib-inspired web platform for a municipal swimming pool.",
+            "t-proj-3-title": "AIrTarNils Mobile", "t-proj-3-snippet": "Android App & REST API (Wildau)", "t-proj-3-desc": "Complete design of an airport employee management solution. Native Android app (Kotlin/Java) connected to a secure REST API (Java 17, PostgreSQL).",
+            "t-proj-4-title": "IntelliClassify App", "t-proj-4-desc": "Development of a CSV data loading and display tool, with supervised classification using the KNN algorithm. Completed in a group of four.",
+            "t-proj-5-title": "JavaFX Trip Management App", "t-proj-5-snippet": "Trip optimization via graphs (JavaFX)", "t-proj-5-desc": "Development of a JavaFX application to optimize real-time trips using graphs. Completed in a team of three.",
+            "t-proj-6-title": "'Who Wants to Be a Millionaire' Game", "t-proj-6-snippet": "Interactive Python game", "t-proj-6-desc": "Creation of a Python game inspired by 'Who Wants to Be a Millionaire,' with a full controller, score, and level management.",
+            "t-proj-7-title": "Matrix Communication Solution", "t-proj-7-snippet": "Synapse & Element (E2E encryption)", "t-proj-7-desc": "Implementation of a Matrix-based communication service offering secure synchronous and asynchronous exchanges (end-to-end encryption).",
+            "t-proj-8-title": "IntelliSocial - Student Social Network", "t-proj-8-desc": "Development of a web-based social network app, IntelliSocial, enabling the creation of discussion threads, posting messages, and reading contributions.",
+            "t-proj-9-title": "Online Multiplayer Game (Agar.io-like)", "t-proj-9-desc": "Creation of an online multiplayer game inspired by Agar.io, where entities grow by absorbing others in a real-time environment.",
+            "t-proj-10-title": "IntelliOS - Custom Operating System", "t-proj-10-desc": "Development of IntelliOS, an Ubuntu-based operating system customized with integrated applications to optimize productivity.",
+            "t-btn-view": "View details", "t-btn-download": "Download Resume PDF",
+            "t-footer-text": "© 2026 Nils Vanderschooten-Akinmoladun - Created with IntelliCV",
+            "t-hobby-football": "Football: US Lesquin", "t-hobby-football-desc": "8 seasons, member since July 2024. Leadership and team cohesion.",
+            "t-hobby-games": "Video Games", "t-hobby-games-desc": "Passion for strategy and adventure games. Game and console collection.",
+            "t-hobby-it": "IT & Multimedia", "t-hobby-it-desc": "Personal projects in web and software development. Multimedia content creation.",
+            "t-hobby-auto": "Automotive", "t-hobby-auto-desc": "Passion for automotive history and mechanics."
+        },
+        es: {
+            typewriter: "Hola, soy Nils",
+            "t-role": "Estudiante y Desarrollador Full-Stack",
+            "t-desc": "Estudiante de 3er año en Informática. Apasionado por el desarrollo y la tecnología, creo aplicaciones robustas e interfaces modernas.",
+            "t-btn-discover": "Descubre mis proyectos",
+            "t-nav-home": "Inicio", "t-nav-about": "Sobre mí", "t-nav-skills": "Habilidades", "t-nav-portfolio": "Portafolio", "t-nav-contact": "Contacto",
+            "t-title-about": "Sobre mí", "t-title-skills": "Habilidades", "t-title-portfolio": "Proyectos", "t-title-contact": "Contáctame",
+            "t-tab-intro": "Presentación", "t-tab-parcours": "Formación", "t-tab-exp": "Experiencia Prof.", "t-tab-loisirs": "Hobbies",
+            "t-about-intro": "Me llamo Nils Vanderschooten-Akinmoladun, tengo 20 años y soy estudiante de tercer año de Informática (BUT) en la Universidad de Lille.",
+            "t-about-intro-2": "Apasionado por el desarrollo y la tecnología, busco constantemente nuevos retos para crear aplicaciones robustas e interfaces modernas.",
+            "t-sub-parcours": "Formación y Educación", "t-sub-exp": "Experiencia Profesional", "t-sub-loisirs": "Hobbies",
+            "t-linkedin-link": "Perfil LinkedIn",
+            "t-edu-1-title": "Grado en Informática - 3er Año", "t-edu-1-desc": "Universidad de Lille. Graduado con título técnico en TI.",
+            "t-exp-1-title": "Práctica Erasmus en Wildau", "t-exp-1-desc": "Desarrollo de aplicación móvil (Aeropuerto de Berlín) y API REST.",
+            "t-exp-1-detail": "Realización de proyectos en infraestructura y telecomunicaciones. Desarrollo de app móvil (Aeropuerto de Berlín) en TH Wildau.",
+            "t-edu-cambridge-title": "Certificado Cambridge", "t-edu-cambridge-desc": "Certificación de inglés obtenida en 2023.",
+            "t-edu-2-title": "Bachillerato General", "t-edu-2-desc": "Liceo EIC Tourcoing.",
+            "t-exp-helpdesk-title": "Práctica HelpDesk - Camaïeu", "t-exp-helpdesk-desc": "Asistencia a usuarios y resolución de problemas técnicos.", "t-exp-helpdesk-date": "Abril 2022 (1 semana)",
+            "t-exp-micromania-title": "Mini-empleo en ventas - Micromania Leers", "t-exp-micromania-desc": "Ventas, asesoramiento al cliente y gestión de inventario.",
+            "t-exp-emaho-title": "Práctica de 3° - Emaho Roubaix", "t-exp-emaho-desc": "Diseño sonoro y digital. Creación de contenido digital.",
+            "t-skill-lang": "Inglés (C1) / Alemán (B2)",
+            "t-skill-docker": "Docker / Máquinas virtuales", "t-skill-linux": "Admin Sistema Linux", "t-skill-hardware": "Soporte TI (montaje/desmontaje PC)",
+            "t-skill-soft": "Trabajo en equipo / Adaptabilidad", "t-skill-problem": "Resolución de problemas / Autonomía", "t-skill-permit": "Licencia de conducir B",
+            "t-proj-1-title": "IntelliCV - Portafolio Digital", "t-proj-1-desc": "Plataforma web de portafolio digital con sistema multilingüe y tema oscuro.",
+            "t-proj-2-title": "Reserva de Piscina", "t-proj-2-snippet": "Plataforma estilo Doctolib (Spring Boot)", "t-proj-2-desc": "Diseño en equipo de una plataforma de reservas para una piscina municipal.",
+            "t-proj-3-title": "AIrTarNils Móvil", "t-proj-3-snippet": "App Android y API REST", "t-proj-3-desc": "Gestión para empleados de aeropuerto. App Android nativa y API REST segura.",
+            "t-proj-4-title": "App IntelliClassify", "t-proj-4-desc": "Herramienta CSV con clasificación supervisada vía algoritmo KNN.",
+            "t-proj-5-title": "App JavaFX Gestión de Rutas", "t-proj-5-snippet": "Optimización de rutas por grafos (JavaFX)", "t-proj-5-desc": "Aplicación JavaFX para optimizar rutas en tiempo real usando grafos.",
+            "t-proj-6-title": "Juego '¿Quién quiere ser millonario?'", "t-proj-6-snippet": "Juego interactivo en Python", "t-proj-6-desc": "Juego en Python inspirado en '¿Quién quiere ser millonario?'.",
+            "t-proj-7-title": "Solución de Comunicación Matrix", "t-proj-7-snippet": "Synapse y Element (cifrado E2E)", "t-proj-7-desc": "Servicio de comunicación basado en Matrix con cifrado de extremo a extremo.",
+            "t-proj-8-title": "IntelliSocial - Red Social Estudiantil", "t-proj-8-desc": "App web de red social para crear hilos de discusión y publicar mensajes.",
+            "t-proj-9-title": "Juego Multijugador en Línea (tipo Agar.io)", "t-proj-9-desc": "Juego multijugador en línea inspirado en Agar.io en tiempo real.",
+            "t-proj-10-title": "IntelliOS - Sistema Operativo", "t-proj-10-desc": "Sistema operativo basado en Ubuntu con aplicaciones integradas.",
+            "t-btn-view": "Ver detalles", "t-btn-download": "Descargar CV en PDF",
+            "t-footer-text": "© 2026 Nils Vanderschooten-Akinmoladun - Creado con IntelliCV",
+            "t-hobby-football": "Fútbol: US Lesquin", "t-hobby-football-desc": "8 temporadas, miembro desde julio 2024.",
+            "t-hobby-games": "Videojuegos", "t-hobby-games-desc": "Pasión por juegos de estrategia y aventura.",
+            "t-hobby-it": "Informática y Multimedia", "t-hobby-it-desc": "Proyectos personales en desarrollo web y software.",
+            "t-hobby-auto": "Automóvil", "t-hobby-auto-desc": "Pasión por la historia y la mecánica automotriz."
+        },
+        de: {
+            typewriter: "Hallo, ich bin Nils",
+            "t-role": "Student & Full-Stack Entwickler",
+            "t-desc": "Informatikstudent im 3. Jahr. Leidenschaftlich für Entwicklung und Technologie, baue ich robuste Apps und moderne Schnittstellen.",
+            "t-btn-discover": "Meine Projekte entdecken",
+            "t-nav-home": "Start", "t-nav-about": "Über mich", "t-nav-skills": "Fähigkeiten", "t-nav-portfolio": "Portfolio", "t-nav-contact": "Kontakt",
+            "t-title-about": "Über mich", "t-title-skills": "Fähigkeiten", "t-title-portfolio": "Projekte", "t-title-contact": "Kontaktiere mich",
+            "t-tab-intro": "Vorstellung", "t-tab-parcours": "Bildung", "t-tab-exp": "Berufserfahrung", "t-tab-loisirs": "Hobbys",
+            "t-about-intro": "Mein Name ist Nils Vanderschooten-Akinmoladun, ich bin 20 Jahre alt und studiere im dritten Jahr Informatik (BUT) an der Universität Lille.",
+            "t-about-intro-2": "Begeistert von Entwicklung und Technologie suche ich ständig nach neuen Herausforderungen, um robuste Anwendungen und moderne Schnittstellen zu entwickeln.",
+            "t-sub-parcours": "Bildung & Ausbildung", "t-sub-exp": "Berufserfahrung", "t-sub-loisirs": "Hobbys",
+            "t-linkedin-link": "LinkedIn-Profil",
+            "t-edu-1-title": "Bachelor in Informatik - 3. Jahr", "t-edu-1-desc": "Universität Lille. Abschluss mit einem technischen IT-Diplom.",
+            "t-exp-1-title": "Erasmus-Praktikum in Wildau", "t-exp-1-desc": "Entwicklung einer mobilen App (Flughafen Berlin) und REST API.",
+            "t-exp-1-detail": "Projekte im Bereich Infrastruktur und Telekommunikation. Mobile App-Entwicklung (Flughafen Berlin) an der TH Wildau.",
+            "t-edu-cambridge-title": "Cambridge-Zertifikat", "t-edu-cambridge-desc": "Englischzertifikat erhalten 2023.",
+            "t-edu-2-title": "Abitur", "t-edu-2-desc": "Gymnasium EIC Tourcoing.",
+            "t-exp-helpdesk-title": "HelpDesk-Praktikum - Camaïeu", "t-exp-helpdesk-desc": "Benutzerunterstützung und technische Problemlösung.", "t-exp-helpdesk-date": "April 2022 (1 Woche)",
+            "t-exp-micromania-title": "Mini-Job Verkauf - Micromania Leers", "t-exp-micromania-desc": "Verkauf, Kundenberatung und Lagerverwaltung.",
+            "t-exp-emaho-title": "Schülerpraktikum - Emaho Roubaix", "t-exp-emaho-desc": "Sound- und Digitaldesign. Erstellung digitaler Inhalte.",
+            "t-skill-lang": "Englisch (C1) / Deutsch (B2)",
+            "t-skill-docker": "Docker / Virtuelle Maschinen", "t-skill-linux": "Linux-Systemadmin", "t-skill-hardware": "IT-Support (PC-Montage/Demontage)",
+            "t-skill-soft": "Teamarbeit / Anpassungsfähigkeit", "t-skill-problem": "Problemlösung / Selbstständigkeit", "t-skill-permit": "Führerschein B",
+            "t-proj-1-title": "IntelliCV - Digitales Portfolio", "t-proj-1-desc": "Erstellung einer digitalen Portfolio-Webplattform mit mehrsprachigem System.",
+            "t-proj-2-title": "Schwimmbad-Buchung", "t-proj-2-snippet": "Plattform im Doctolib-Stil (Spring Boot)", "t-proj-2-desc": "Teamdesign einer Buchungsplattform für ein städtisches Schwimmbad.",
+            "t-proj-3-title": "AIrTarNils Mobile", "t-proj-3-snippet": "Android-App & REST-API", "t-proj-3-desc": "Management-Lösung für Flughafenmitarbeiter. Native Android-App und REST-API.",
+            "t-proj-4-title": "IntelliClassify App", "t-proj-4-desc": "CSV-Tool mit überwachter Klassifizierung via KNN-Algorithmus.",
+            "t-proj-5-title": "JavaFX Routenmanagement-App", "t-proj-5-snippet": "Routenoptimierung per Graphen (JavaFX)", "t-proj-5-desc": "JavaFX-App zur Echtzeitoptimierung von Routen mittels Graphen.",
+            "t-proj-6-title": "'Wer wird Millionär'-Spiel", "t-proj-6-snippet": "Interaktives Python-Spiel", "t-proj-6-desc": "Python-Spiel inspiriert von 'Wer wird Millionär'.",
+            "t-proj-7-title": "Matrix-Kommunikationslösung", "t-proj-7-snippet": "Synapse & Element (E2E-Verschlüsselung)", "t-proj-7-desc": "Matrix-basierter Kommunikationsdienst mit Ende-zu-Ende-Verschlüsselung.",
+            "t-proj-8-title": "IntelliSocial - Studentennetzwerk", "t-proj-8-desc": "Web-basierte Social-Network-App für Diskussionsfäden und Nachrichten.",
+            "t-proj-9-title": "Online-Multiplayer-Spiel (Agar.io-like)", "t-proj-9-desc": "Online-Multiplayer-Spiel inspiriert von Agar.io in Echtzeit.",
+            "t-proj-10-title": "IntelliOS - Betriebssystem", "t-proj-10-desc": "Auf Ubuntu basierendes Betriebssystem mit integrierten Anwendungen.",
+            "t-btn-view": "Details anzeigen", "t-btn-download": "Lebenslauf als PDF",
+            "t-footer-text": "© 2026 Nils Vanderschooten-Akinmoladun - Erstellt mit IntelliCV",
+            "t-hobby-football": "Fußball: US Lesquin", "t-hobby-football-desc": "8 Saisons, Mitglied seit Juli 2024.",
+            "t-hobby-games": "Videospiele", "t-hobby-games-desc": "Leidenschaft für Strategie- und Abenteuerspiele.",
+            "t-hobby-it": "IT & Multimedia", "t-hobby-it-desc": "Persönliche Projekte in Web- und Softwareentwicklung.",
+            "t-hobby-auto": "Automobil", "t-hobby-auto-desc": "Leidenschaft für Automobilgeschichte und -mechanik."
+        }
+    };
+
+    let currentLang = 'fr';
+    let typeWriterInterval;
+
+    // EFFET MACHINE A ECRIRE (TERMINAL)
+    function startTypewriter(text) {
+        clearInterval(typeWriterInterval);
+        const twElement = document.getElementById('typewriter');
+        twElement.innerHTML = '';
+        let i = 0;
+        typeWriterInterval = setInterval(() => {
+            if (i < text.length) {
+                twElement.innerHTML += text.charAt(i);
+                i++;
+            } else {
+                clearInterval(typeWriterInterval);
+            }
+        }, 100); // Vitesse de frappe
+    }
+
+    // CHANGEMENT DE LANGUE (FR, EN, ES, DE)
+    function switchLang(lang) {
+        currentLang = lang;
+
+        // Màj des boutons
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.classList.remove('active');
+            if(btn.getAttribute('onclick') && btn.getAttribute('onclick').includes("'" + lang + "'")) btn.classList.add('active');
+        });
+
+        // Relance l'effet machine à écrire avec le bon texte
+        startTypewriter(dictionary[lang].typewriter);
+
+        // Remplace les autres textes statiques
+        for (const [key, value] of Object.entries(dictionary[lang])) {
+            if (key === 'typewriter') continue;
+            const elements = document.querySelectorAll('.' + key);
+            elements.forEach(el => {
+                if(el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                    el.placeholder = value;
                 } else {
-                    btn.textContent = lang === 'fr' ? 'Cacher' : 'Hide';
+                    el.innerText = value;
                 }
             });
+        }
+    }
 
-            // Mettre à jour le style des boutons langue
-            langButtons.forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
-        });
+    // Lancement par défaut en Français
+    document.addEventListener("DOMContentLoaded", () => {
+        switchLang('fr');
     });
+
 </script>
 </body>
 </html>
+
